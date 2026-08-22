@@ -58,7 +58,7 @@ export default function AIAndesStudioLanding() {
       h1_1: 'We engineer digital systems that ',
       h1_accent: 'eliminate admin friction',
       h1_2: '.',
-      heroLead: 'Replace scattered WhatsApp chats, manual spreadsheets, and delayed replies with bespoke websites, smart intake forms, and automated team dashboards.',
+      heroLead: 'Replace scattered WhatsApp chats, manual spreadsheets, and delayed email replies with bespoke websites, smart intake forms, and automated team dashboards.',
       btnAudit: 'Request Free Workflow Audit',
       btnDemos: 'Test Live Sandboxes',
       navServices: 'Architecture',
@@ -107,7 +107,7 @@ export default function AIAndesStudioLanding() {
       scopeBadge: 'Delivery Standards',
       scopeTitle: 'Explicit scope boundaries',
       scopeDesc: 'We deliver focused systems with defined deliverables and honest execution.',
-      scopeInTitle: 'What we deliver',
+      scopeInTitle: 'What we engineer',
       scopeIn1: '• Bespoke Next.js websites & high-converting intake pages',
       scopeIn2: '• Automated data pipelines (Notion, Airtable, Webhooks, APIs)',
       scopeIn3: '• Internal dashboards & client tracking status pipelines',
@@ -208,52 +208,52 @@ export default function AIAndesStudioLanding() {
   }[lang];
 
   return (
-    <div className="min-h-screen bg-[#070A11] text-slate-100 antialiased font-sans">
+    <div style={{ backgroundColor: '#06080E', minHeight: '100vh', color: '#F1F5F9' }}>
       
       {/* ─── NAVBAR ─── */}
-      <header className="sticky top-0 z-50 bg-[#070A11]/90 backdrop-blur-md border-b border-slate-800">
-        <div className="max-w-6xl mx-auto px-6 h-18 flex items-center justify-between">
+      <header style={{ backgroundColor: 'rgba(6, 8, 14, 0.95)', borderBottom: '1px solid #1E293B', position: 'sticky', top: 0, zIndex: 50, backdropFilter: 'blur(12px)' }}>
+        <div style={{ maxWidth: 1152, margin: '0 auto', padding: '0 24px', height: 72, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           
-          {/* Logo with Explicit Sizing */}
-          <div className="flex items-center gap-3">
-            <div className="h-9 w-9 rounded-xl bg-slate-900 border border-sky-500/30 p-1.5 flex items-center justify-center shrink-0">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-sky-400 shrink-0" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M3 20h18L14 4l-4 7-3-4-4 13z" className="fill-sky-400/10" />
+          {/* Logo with Explicit 36px Box */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <div style={{ width: 36, height: 36, borderRadius: 10, backgroundColor: '#0F172A', border: '1px solid #38BDF8', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 20h18L14 4l-4 7-3-4-4 13z" fill="rgba(56, 189, 248, 0.15)" />
                 <path d="M14 4l7 16H3l4-13 3 4 4-7z" />
-                <circle cx="14" cy="4" r="1.5" className="fill-sky-400 stroke-none" />
+                <circle cx="14" cy="4" r="1.5" fill="#38BDF8" stroke="none" />
               </svg>
             </div>
-            <div className="flex flex-col">
-              <span className="font-bold tracking-tight text-base text-white flex items-center gap-1.5">
-                AI Andes <span className="text-sky-400 font-mono text-[10px] px-1.5 py-0.5 rounded bg-sky-950 border border-sky-800 font-bold">STUDIO</span>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <span style={{ fontWeight: 700, fontSize: 16, color: '#FFFFFF', display: 'flex', alignItems: 'center', gap: 6 }}>
+                AI Andes <span style={{ color: '#38BDF8', fontSize: 10, padding: '2px 6px', borderRadius: 4, backgroundColor: 'rgba(56,189,248,0.1)', border: '1px solid rgba(56,189,248,0.3)', fontFamily: 'monospace', fontWeight: 700 }}>STUDIO</span>
               </span>
-              <span className="text-[10px] text-slate-400 font-mono tracking-wider uppercase">Systems & Automations</span>
+              <span style={{ fontSize: 10, color: '#94A3B8', fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: 1 }}>Systems & Automations</span>
             </div>
           </div>
 
-          {/* Nav Links */}
-          <nav className="hidden md:flex items-center gap-6 text-xs font-mono uppercase tracking-wider text-slate-400">
-            <a href="#architecture" className="hover:text-white transition-colors">{t.navServices}</a>
-            <a href="#sandboxes" className="hover:text-white transition-colors">{t.navDemos}</a>
-            <a href="#outcomes" className="hover:text-white transition-colors">{t.navCases}</a>
-            <a href="#roi" className="hover:text-white transition-colors">{t.navCalc}</a>
-            <a href="#scope" className="hover:text-white transition-colors">{t.navScope}</a>
+          {/* Links */}
+          <nav style={{ display: 'none', alignItems: 'center', gap: 24, fontSize: 12, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: 1 }} className="md:flex">
+            <a href="#architecture" style={{ color: '#94A3B8', textDecoration: 'none' }}>{t.navServices}</a>
+            <a href="#sandboxes" style={{ color: '#94A3B8', textDecoration: 'none' }}>{t.navDemos}</a>
+            <a href="#outcomes" style={{ color: '#94A3B8', textDecoration: 'none' }}>{t.navCases}</a>
+            <a href="#roi" style={{ color: '#94A3B8', textDecoration: 'none' }}>{t.navCalc}</a>
+            <a href="#scope" style={{ color: '#94A3B8', textDecoration: 'none' }}>{t.navScope}</a>
           </nav>
 
           {/* Controls */}
-          <div className="flex items-center gap-3">
-            <div className="flex items-center p-1 rounded-lg bg-slate-900 border border-slate-700 text-xs font-mono">
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <div style={{ display: 'flex', alignItems: 'center', padding: 4, borderRadius: 8, backgroundColor: '#0F172A', border: '1px solid #1E293B', fontSize: 12, fontFamily: 'monospace' }}>
               <button 
                 type="button" 
                 onClick={() => setLang('en')}
-                className={`px-2.5 py-1 rounded transition-all ${lang === 'en' ? 'bg-sky-500 text-slate-950 font-bold' : 'text-slate-400 hover:text-white'}`}
+                style={{ padding: '4px 10px', borderRadius: 6, border: 'none', cursor: 'pointer', backgroundColor: lang === 'en' ? '#38BDF8' : 'transparent', color: lang === 'en' ? '#0F172A' : '#94A3B8', fontWeight: lang === 'en' ? 700 : 500 }}
               >
                 ENG
               </button>
               <button 
                 type="button" 
                 onClick={() => setLang('es')}
-                className={`px-2.5 py-1 rounded transition-all ${lang === 'es' ? 'bg-sky-500 text-slate-950 font-bold' : 'text-slate-400 hover:text-white'}`}
+                style={{ padding: '4px 10px', borderRadius: 6, border: 'none', cursor: 'pointer', backgroundColor: lang === 'es' ? '#38BDF8' : 'transparent', color: lang === 'es' ? '#0F172A' : '#94A3B8', fontWeight: lang === 'es' ? 700 : 500 }}
               >
                 ESP
               </button>
@@ -261,7 +261,8 @@ export default function AIAndesStudioLanding() {
 
             <a 
               href="#audit"
-              className="hidden sm:inline-flex text-xs uppercase tracking-wider font-mono font-bold px-4 py-2 rounded-lg bg-sky-500 text-slate-950 hover:bg-sky-400 transition-all shadow-md"
+              style={{ padding: '8px 16px', borderRadius: 8, backgroundColor: '#38BDF8', color: '#090D16', fontWeight: 700, fontSize: 12, textDecoration: 'none', textTransform: 'uppercase', fontFamily: 'monospace', display: 'none' }}
+              className="sm:inline-block"
             >
               {t.navCta}
             </a>
@@ -271,84 +272,84 @@ export default function AIAndesStudioLanding() {
       </header>
 
       {/* ─── HERO SECTION ─── */}
-      <section className="pt-20 pb-16 px-6 border-b border-slate-850">
-        <div className="max-w-4xl mx-auto text-center">
+      <section style={{ padding: '80px 24px 64px 24px', borderBottom: '1px solid #1E293B', textAlign: 'center' }}>
+        <div style={{ maxWidth: 896, margin: '0 auto' }}>
           
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-sky-500/30 bg-sky-950/40 text-xs font-mono text-sky-300 mb-6">
-            <span className="w-2 h-2 rounded-full bg-sky-400 animate-pulse" />
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '6px 14px', borderRadius: 9999, border: '1px solid rgba(56, 189, 248, 0.3)', backgroundColor: 'rgba(56, 189, 248, 0.05)', fontSize: 12, fontFamily: 'monospace', color: '#38BDF8', marginBottom: 24 }}>
+            <span style={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: '#38BDF8', display: 'inline-block' }} />
             {t.badge}
           </div>
 
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-tight mb-6">
-            {t.h1_1}<span className="text-sky-400">{t.h1_accent}</span>{t.h1_2}
+          <h1 style={{ fontSize: 'clamp(32px, 5vw, 56px)', fontWeight: 800, lineHeight: 1.15, color: '#FFFFFF', marginBottom: 24, letterSpacing: -1 }}>
+            {t.h1_1}<span style={{ color: '#38BDF8' }}>{t.h1_accent}</span>{t.h1_2}
           </h1>
 
-          <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+          <p style={{ fontSize: 18, color: '#94A3B8', maxWidth: 672, margin: '0 auto 40px auto', lineHeight: 1.6 }}>
             {t.heroLead}
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: 16, marginBottom: 56 }}>
             <a 
               href="#audit"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-sm transition-all shadow-lg"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '16px 28px', borderRadius: 12, backgroundColor: '#38BDF8', color: '#090D16', fontWeight: 700, fontSize: 14, textDecoration: 'none', boxShadow: '0 0 24px rgba(56, 189, 248, 0.35)' }}
             >
               {t.btnAudit}
               <ArrowRight width="16" height="16" />
             </a>
             <a 
               href="#sandboxes"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-slate-900 border border-slate-700 text-slate-300 font-medium text-sm hover:bg-slate-800 hover:text-white transition-all"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '16px 28px', borderRadius: 12, backgroundColor: '#0F172A', border: '1px solid #334155', color: '#E2E8F0', fontWeight: 600, fontSize: 14, textDecoration: 'none' }}
             >
               {t.btnDemos}
             </a>
           </div>
 
           {/* Interactive Pipeline Visualizer */}
-          <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl text-left">
-            <div className="flex items-center justify-between pb-4 border-b border-slate-800 text-xs font-mono text-slate-400 mb-5">
-              <div className="flex items-center gap-2 font-bold text-slate-200">
-                <Workflow width="16" height="16" className="text-sky-400" />
+          <div style={{ padding: 24, borderRadius: 16, backgroundColor: '#0B0F19', border: '1px solid #1E293B', textAlign: 'left', maxWidth: 800, margin: '0 auto' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 16, borderBottom: '1px solid #1E293B', fontSize: 12, fontFamily: 'monospace', color: '#94A3B8', marginBottom: 16 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontWeight: 700, color: '#FFFFFF' }}>
+                <Workflow width="16" height="16" color="#38BDF8" />
                 Live Workflow Execution Blueprint
               </div>
-              <span className="text-[10px] px-2 py-0.5 rounded bg-sky-950 text-sky-300 border border-sky-800">
+              <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 4, backgroundColor: '#0F172A', color: '#38BDF8', border: '1px solid rgba(56,189,248,0.3)' }}>
                 Simulated Latency: ~1.2s
               </span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 font-mono text-xs">
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 12, fontFamily: 'monospace', fontSize: 12 }}>
               <button 
                 type="button" 
                 onClick={() => setHeroStep(1)}
-                className={`p-4 rounded-xl border text-left transition-all ${heroStep === 1 ? 'bg-sky-950/60 border-sky-500 text-white' : 'bg-slate-950 border-slate-800 text-slate-400'}`}
+                style={{ padding: 16, borderRadius: 12, border: heroStep === 1 ? '1px solid #38BDF8' : '1px solid #1E293B', backgroundColor: heroStep === 1 ? 'rgba(56, 189, 248, 0.1)' : '#070A11', textAlign: 'left', cursor: 'pointer' }}
               >
-                <div className="text-[10px] text-sky-400 mb-1 font-bold">NODE 01</div>
-                <div className="font-bold text-white text-sm">{t.pStep1}</div>
-                <div className="text-xs text-slate-400 mt-1">{t.pStep1Sub}</div>
+                <div style={{ fontSize: 10, color: '#38BDF8', fontWeight: 700, marginBottom: 4 }}>NODE 01</div>
+                <div style={{ fontWeight: 700, color: '#FFFFFF', fontSize: 13 }}>{t.pStep1}</div>
+                <div style={{ fontSize: 11, color: '#94A3B8', marginTop: 4 }}>{t.pStep1Sub}</div>
               </button>
 
               <button 
                 type="button" 
                 onClick={() => setHeroStep(2)}
-                className={`p-4 rounded-xl border text-left transition-all ${heroStep === 2 ? 'bg-sky-950/60 border-sky-500 text-white' : 'bg-slate-950 border-slate-800 text-slate-400'}`}
+                style={{ padding: 16, borderRadius: 12, border: heroStep === 2 ? '1px solid #38BDF8' : '1px solid #1E293B', backgroundColor: heroStep === 2 ? 'rgba(56, 189, 248, 0.1)' : '#070A11', textAlign: 'left', cursor: 'pointer' }}
               >
-                <div className="text-[10px] text-sky-400 mb-1 font-bold">NODE 02</div>
-                <div className="font-bold text-white text-sm">{t.pStep2}</div>
-                <div className="text-xs text-slate-400 mt-1">{t.pStep2Sub}</div>
+                <div style={{ fontSize: 10, color: '#38BDF8', fontWeight: 700, marginBottom: 4 }}>NODE 02</div>
+                <div style={{ fontWeight: 700, color: '#FFFFFF', fontSize: 13 }}>{t.pStep2}</div>
+                <div style={{ fontSize: 11, color: '#94A3B8', marginTop: 4 }}>{t.pStep2Sub}</div>
               </button>
 
               <button 
                 type="button" 
                 onClick={() => setHeroStep(3)}
-                className={`p-4 rounded-xl border text-left transition-all ${heroStep === 3 ? 'bg-sky-950/60 border-sky-500 text-white' : 'bg-slate-950 border-slate-800 text-slate-400'}`}
+                style={{ padding: 16, borderRadius: 12, border: heroStep === 3 ? '1px solid #38BDF8' : '1px solid #1E293B', backgroundColor: heroStep === 3 ? 'rgba(56, 189, 248, 0.1)' : '#070A11', textAlign: 'left', cursor: 'pointer' }}
               >
-                <div className="text-[10px] text-sky-400 mb-1 font-bold">NODE 03</div>
-                <div className="font-bold text-white text-sm">{t.pStep3}</div>
-                <div className="text-xs text-slate-400 mt-1">{t.pStep3Sub}</div>
+                <div style={{ fontSize: 10, color: '#38BDF8', fontWeight: 700, marginBottom: 4 }}>NODE 03</div>
+                <div style={{ fontWeight: 700, color: '#FFFFFF', fontSize: 13 }}>{t.pStep3}</div>
+                <div style={{ fontSize: 11, color: '#94A3B8', marginTop: 4 }}>{t.pStep3Sub}</div>
               </button>
             </div>
 
-            <div className="mt-4 p-3 rounded-lg bg-slate-950 border border-slate-800 font-mono text-xs text-slate-300 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+            <div style={{ marginTop: 16, padding: 12, borderRadius: 8, backgroundColor: '#070A11', border: '1px solid #1E293B', fontFamily: 'monospace', fontSize: 12, color: '#CBD5E1', display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span style={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: '#10B981', display: 'inline-block', flexShrink: 0 }} />
               <span>
                 {heroStep === 1 && 'Step 1: Inbound customer inquiry submitted via responsive Next.js form.'}
                 {heroStep === 2 && 'Step 2: Edge AI extracts parameters & validates budget against portfolio in 1.2s.'}
@@ -361,50 +362,50 @@ export default function AIAndesStudioLanding() {
       </section>
 
       {/* ─── ARCHITECTURE CARDS ─── */}
-      <section id="architecture" className="py-20 px-6 border-b border-slate-850">
-        <div className="max-w-6xl mx-auto">
-          <div className="max-w-xl mb-12">
-            <div className="text-xs font-mono uppercase tracking-wider text-sky-400 mb-2">{t.archBadge}</div>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white mb-2">{t.archTitle}</h2>
-            <p className="text-sm text-slate-400">{t.archDesc}</p>
+      <section id="architecture" style={{ padding: '80px 24px', borderBottom: '1px solid #1E293B' }}>
+        <div style={{ maxWidth: 1152, margin: '0 auto' }}>
+          <div style={{ maxWidth: 576, marginBottom: 48 }}>
+            <div style={{ fontSize: 12, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: 1, color: '#38BDF8', marginBottom: 8 }}>{t.archBadge}</div>
+            <h2 style={{ fontSize: 28, fontWeight: 700, color: '#FFFFFF', marginBottom: 8 }}>{t.archTitle}</h2>
+            <p style={{ fontSize: 14, color: '#94A3B8' }}>{t.archDesc}</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col justify-between">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24 }}>
+            <div style={{ padding: 32, borderRadius: 16, backgroundColor: '#0B0F19', border: '1px solid #1E293B', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
               <div>
-                <div className="h-10 w-10 rounded-xl bg-sky-950 border border-sky-800 text-sky-400 font-mono font-bold flex items-center justify-center mb-4">
+                <div style={{ width: 40, height: 40, borderRadius: 10, backgroundColor: 'rgba(56,189,248,0.1)', border: '1px solid rgba(56,189,248,0.3)', color: '#38BDF8', fontFamily: 'monospace', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20 }}>
                   01
                 </div>
-                <h3 className="text-lg font-bold text-white mb-2">{t.step1Title}</h3>
-                <p className="text-xs text-slate-400 leading-relaxed mb-6">{t.step1Desc}</p>
+                <h3 style={{ fontSize: 18, fontWeight: 700, color: '#FFFFFF', marginBottom: 8 }}>{t.step1Title}</h3>
+                <p style={{ fontSize: 13, color: '#94A3B8', lineHeight: 1.6, marginBottom: 24 }}>{t.step1Desc}</p>
               </div>
-              <div className="text-xs font-mono text-sky-400 flex items-center gap-2 pt-4 border-t border-slate-800">
+              <div style={{ fontSize: 12, fontFamily: 'monospace', color: '#38BDF8', display: 'flex', alignItems: 'center', gap: 8, paddingTop: 16, borderTop: '1px solid #1E293B' }}>
                 <Check width="14" height="14" /> High-speed conversion front-end
               </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col justify-between">
+            <div style={{ padding: 32, borderRadius: 16, backgroundColor: '#0B0F19', border: '1px solid #1E293B', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
               <div>
-                <div className="h-10 w-10 rounded-xl bg-sky-950 border border-sky-800 text-sky-400 font-mono font-bold flex items-center justify-center mb-4">
+                <div style={{ width: 40, height: 40, borderRadius: 10, backgroundColor: 'rgba(56,189,248,0.1)', border: '1px solid rgba(56,189,248,0.3)', color: '#38BDF8', fontFamily: 'monospace', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20 }}>
                   02
                 </div>
-                <h3 className="text-lg font-bold text-white mb-2">{t.step2Title}</h3>
-                <p className="text-xs text-slate-400 leading-relaxed mb-6">{t.step2Desc}</p>
+                <h3 style={{ fontSize: 18, fontWeight: 700, color: '#FFFFFF', marginBottom: 8 }}>{t.step2Title}</h3>
+                <p style={{ fontSize: 13, color: '#94A3B8', lineHeight: 1.6, marginBottom: 24 }}>{t.step2Desc}</p>
               </div>
-              <div className="text-xs font-mono text-sky-400 flex items-center gap-2 pt-4 border-t border-slate-800">
+              <div style={{ fontSize: 12, fontFamily: 'monospace', color: '#38BDF8', display: 'flex', alignItems: 'center', gap: 8, paddingTop: 16, borderTop: '1px solid #1E293B' }}>
                 <Check width="14" height="14" /> Zero manual sorting needed
               </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col justify-between">
+            <div style={{ padding: 32, borderRadius: 16, backgroundColor: '#0B0F19', border: '1px solid #1E293B', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
               <div>
-                <div className="h-10 w-10 rounded-xl bg-sky-950 border border-sky-800 text-sky-400 font-mono font-bold flex items-center justify-center mb-4">
+                <div style={{ width: 40, height: 40, borderRadius: 10, backgroundColor: 'rgba(56,189,248,0.1)', border: '1px solid rgba(56,189,248,0.3)', color: '#38BDF8', fontFamily: 'monospace', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20 }}>
                   03
                 </div>
-                <h3 className="text-lg font-bold text-white mb-2">{t.step3Title}</h3>
-                <p className="text-xs text-slate-400 leading-relaxed mb-6">{t.step3Desc}</p>
+                <h3 style={{ fontSize: 18, fontWeight: 700, color: '#FFFFFF', marginBottom: 8 }}>{t.step3Title}</h3>
+                <p style={{ fontSize: 13, color: '#94A3B8', lineHeight: 1.6, marginBottom: 24 }}>{t.step3Desc}</p>
               </div>
-              <div className="text-xs font-mono text-sky-400 flex items-center gap-2 pt-4 border-t border-slate-800">
+              <div style={{ fontSize: 12, fontFamily: 'monospace', color: '#38BDF8', display: 'flex', alignItems: 'center', gap: 8, paddingTop: 16, borderTop: '1px solid #1E293B' }}>
                 <Check width="14" height="14" /> Real-time operational dispatch
               </div>
             </div>
@@ -412,66 +413,66 @@ export default function AIAndesStudioLanding() {
         </div>
       </section>
 
-      {/* ─── INTERACTIVE SANDBOXES ─── */}
-      <section id="sandboxes" className="py-20 px-6 border-b border-slate-850">
-        <div className="max-w-6xl mx-auto">
+      {/* ─── INTERACTIVE SANDBOX ─── */}
+      <section id="sandboxes" style={{ padding: '80px 24px', borderBottom: '1px solid #1E293B', backgroundColor: '#080C14' }}>
+        <div style={{ maxWidth: 1152, margin: '0 auto' }}>
           
-          <div className="max-w-xl mb-12">
-            <div className="text-xs font-mono uppercase tracking-wider text-sky-400 mb-2">{t.sandBadge}</div>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white mb-2">{t.sandTitle}</h2>
-            <p className="text-sm text-slate-400">{t.sandDesc}</p>
+          <div style={{ maxWidth: 576, marginBottom: 48 }}>
+            <div style={{ fontSize: 12, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: 1, color: '#38BDF8', marginBottom: 8 }}>{t.sandBadge}</div>
+            <h2 style={{ fontSize: 28, fontWeight: 700, color: '#FFFFFF', marginBottom: 8 }}>{t.sandTitle}</h2>
+            <p style={{ fontSize: 14, color: '#94A3B8' }}>{t.sandDesc}</p>
           </div>
 
-          <div className="p-6 md:p-8 rounded-2xl bg-slate-900 border border-slate-800 shadow-xl">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <div style={{ padding: 32, borderRadius: 20, backgroundColor: '#0B0F19', border: '1px solid #1E293B', boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 32 }}>
               
-              {/* Form Input */}
-              <div className="lg:col-span-6 space-y-4 font-mono text-xs">
-                <div className="flex items-center justify-between pb-3 border-b border-slate-800 font-bold text-slate-200">
-                  <span className="text-sky-300 uppercase tracking-wider">Inbound Customer Intake</span>
-                  <span className="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-300">Live Component</span>
+              {/* Form Column */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 16, fontFamily: 'monospace', fontSize: 12 }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 12, borderBottom: '1px solid #1E293B', fontWeight: 700, color: '#FFFFFF' }}>
+                  <span style={{ color: '#38BDF8', textTransform: 'uppercase', letterSpacing: 1 }}>Inbound Customer Intake</span>
+                  <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 4, backgroundColor: '#0F172A', color: '#94A3B8' }}>Live Component</span>
                 </div>
 
                 <div>
-                  <label className="text-slate-400 block mb-1">Client Full Name</label>
+                  <label style={{ color: '#94A3B8', display: 'block', marginBottom: 6 }}>Client Full Name</label>
                   <input 
                     type="text" 
                     value={reForm.name} 
                     onChange={(e) => setReForm({...reForm, name: e.target.value})}
-                    className="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white focus:outline-none focus:border-sky-500"
+                    style={{ width: '100%', backgroundColor: '#070A11', border: '1px solid #334155', borderRadius: 8, padding: 10, color: '#FFFFFF', outline: 'none' }}
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
                   <div>
-                    <label className="text-slate-400 block mb-1">Intent</label>
+                    <label style={{ color: '#94A3B8', display: 'block', marginBottom: 6 }}>Intent</label>
                     <select 
                       value={reForm.intent} 
                       onChange={(e) => setReForm({...reForm, intent: e.target.value})}
-                      className="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white focus:outline-none focus:border-sky-500"
+                      style={{ width: '100%', backgroundColor: '#070A11', border: '1px solid #334155', borderRadius: 8, padding: 10, color: '#FFFFFF', outline: 'none' }}
                     >
                       <option value="rent">Property Rental</option>
                       <option value="buy">Property Purchase</option>
                     </select>
                   </div>
                   <div>
-                    <label className="text-slate-400 block mb-1">Budget (€)</label>
+                    <label style={{ color: '#94A3B8', display: 'block', marginBottom: 6 }}>Budget (€)</label>
                     <input 
                       type="text" 
                       value={reForm.budget} 
                       onChange={(e) => setReForm({...reForm, budget: e.target.value})}
-                      className="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white focus:outline-none focus:border-sky-500"
+                      style={{ width: '100%', backgroundColor: '#070A11', border: '1px solid #334155', borderRadius: 8, padding: 10, color: '#FFFFFF', outline: 'none' }}
                     />
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
                   <div>
-                    <label className="text-slate-400 block mb-1">Bedrooms</label>
+                    <label style={{ color: '#94A3B8', display: 'block', marginBottom: 6 }}>Bedrooms</label>
                     <select 
                       value={reForm.rooms} 
                       onChange={(e) => setReForm({...reForm, rooms: e.target.value})}
-                      className="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white focus:outline-none focus:border-sky-500"
+                      style={{ width: '100%', backgroundColor: '#070A11', border: '1px solid #334155', borderRadius: 8, padding: 10, color: '#FFFFFF', outline: 'none' }}
                     >
                       <option value="1">1 Bed</option>
                       <option value="2">2 Beds</option>
@@ -479,12 +480,12 @@ export default function AIAndesStudioLanding() {
                     </select>
                   </div>
                   <div>
-                    <label className="text-slate-400 block mb-1">Target Zone</label>
+                    <label style={{ color: '#94A3B8', display: 'block', marginBottom: 6 }}>Target Zone</label>
                     <input 
                       type="text" 
                       value={reForm.location} 
                       onChange={(e) => setReForm({...reForm, location: e.target.value})}
-                      className="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white focus:outline-none focus:border-sky-500"
+                      style={{ width: '100%', backgroundColor: '#070A11', border: '1px solid #334155', borderRadius: 8, padding: 10, color: '#FFFFFF', outline: 'none' }}
                     />
                   </div>
                 </div>
@@ -492,38 +493,38 @@ export default function AIAndesStudioLanding() {
                 <button 
                   type="button" 
                   onClick={() => setReStep(2)}
-                  className="w-full py-3 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs transition-all flex items-center justify-center gap-2 shadow-md"
+                  style={{ width: '100%', padding: '14px', borderRadius: 10, backgroundColor: '#38BDF8', color: '#090D16', border: 'none', fontWeight: 700, fontSize: 13, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginTop: 8 }}
                 >
-                  <Zap width="14" height="14" />
+                  <Zap width="16" height="16" />
                   Process Inquiry & Generate AI Brief
                 </button>
               </div>
 
-              {/* Console Output */}
-              <div className="lg:col-span-6 p-5 rounded-xl bg-slate-950 border border-slate-800 font-mono text-xs space-y-4">
-                <div className="flex items-center justify-between pb-3 border-b border-slate-800 font-bold">
-                  <div className="flex items-center gap-2 text-slate-200">
-                    <Terminal width="14" height="14" className="text-sky-400" />
+              {/* Output Column */}
+              <div style={{ padding: 24, borderRadius: 16, backgroundColor: '#070A11', border: '1px solid #1E293B', fontFamily: 'monospace', fontSize: 12, display: 'flex', flexDirection: 'column', gap: 16 }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 12, borderBottom: '1px solid #1E293B', fontWeight: 700 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#FFFFFF' }}>
+                    <Terminal width="16" height="16" color="#38BDF8" />
                     Workflow Engine State
                   </div>
-                  <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800">
+                  <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 4, backgroundColor: 'rgba(16, 185, 129, 0.1)', color: '#10B981', border: '1px solid rgba(16, 185, 129, 0.3)' }}>
                     Active
                   </span>
                 </div>
 
                 {reStep === 2 ? (
-                  <div className="space-y-3">
-                    <div className="p-3.5 rounded-lg bg-slate-900 border border-sky-900/60 space-y-2">
-                      <div className="flex items-center justify-between text-sky-300 font-bold">
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                    <div style={{ padding: 16, borderRadius: 10, backgroundColor: '#0F172A', border: '1px solid rgba(56, 189, 248, 0.3)', display: 'flex', flexDirection: 'column', gap: 8 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: '#38BDF8', fontWeight: 700 }}>
                         <span>AI Executive Brief</span>
-                        <span className="text-[10px] text-emerald-400">Match 96%</span>
+                        <span style={{ fontSize: 10, color: '#10B981' }}>Match 96%</span>
                       </div>
-                      <p className="text-slate-200 leading-relaxed text-[11px]">
+                      <p style={{ color: '#E2E8F0', lineHeight: 1.5, fontSize: 12 }}>
                         &quot;{reForm.name} is seeking a {reForm.rooms}-bedroom {reForm.intent} in {reForm.location} (Budget: €{reForm.budget}). Matched 3 active units. Auto-invite for viewing dispatched.&quot;
                       </p>
                     </div>
 
-                    <div className="space-y-1 text-[10px] text-slate-400 bg-slate-900/40 p-2.5 rounded border border-slate-800">
+                    <div style={{ padding: 12, borderRadius: 8, backgroundColor: 'rgba(15, 23, 42, 0.5)', border: '1px solid #1E293B', fontSize: 11, color: '#94A3B8', display: 'flex', flexDirection: 'column', gap: 4 }}>
                       <div>➔ Notion Database: Row created with tag [Urgent Followup]</div>
                       <div>➔ Calendar Link: Proposed viewing timeslot generated</div>
                       <div>➔ Agent Alert: Push notification sent to mobile</div>
@@ -532,14 +533,14 @@ export default function AIAndesStudioLanding() {
                     <button 
                       type="button" 
                       onClick={() => setReStep(1)}
-                      className="w-full py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs transition-colors"
+                      style={{ width: '100%', padding: '10px', borderRadius: 8, backgroundColor: '#1E293B', color: '#E2E8F0', border: 'none', fontSize: 12, cursor: 'pointer' }}
                     >
                       Reset Scenario
                     </button>
                   </div>
                 ) : (
-                  <div className="py-12 text-center text-slate-500 space-y-2">
-                    <Workflow width="24" height="24" className="mx-auto stroke-slate-600 animate-pulse" />
+                  <div style={{ padding: '48px 0', textAlign: 'center', color: '#64748B', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
+                    <Workflow width="32" height="32" stroke="#475569" />
                     <p>Click &quot;Process Inquiry&quot; to test the live classification stream.</p>
                   </div>
                 )}
@@ -551,19 +552,19 @@ export default function AIAndesStudioLanding() {
       </section>
 
       {/* ─── ROI CALCULATOR ─── */}
-      <section id="roi" className="py-20 px-6 border-b border-slate-850">
-        <div className="max-w-3xl mx-auto p-6 md:p-10 rounded-2xl bg-slate-900 border border-slate-800 shadow-xl">
-          <div className="text-center max-w-xl mx-auto mb-8">
-            <div className="text-xs font-mono uppercase tracking-wider text-sky-400 mb-2">{t.calcBadge}</div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">{t.calcTitle}</h2>
-            <p className="text-xs text-slate-400">{t.calcDesc}</p>
+      <section id="roi" style={{ padding: '80px 24px', borderBottom: '1px solid #1E293B' }}>
+        <div style={{ maxWidth: 768, margin: '0 auto', padding: 36, borderRadius: 20, backgroundColor: '#0B0F19', border: '1px solid #1E293B', boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }}>
+          <div style={{ textAlign: 'center', maxWidth: 576, margin: '0 auto 32px auto' }}>
+            <div style={{ fontSize: 12, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: 1, color: '#38BDF8', marginBottom: 8 }}>{t.calcBadge}</div>
+            <h2 style={{ fontSize: 26, fontWeight: 700, color: '#FFFFFF', marginBottom: 8 }}>{t.calcTitle}</h2>
+            <p style={{ fontSize: 13, color: '#94A3B8' }}>{t.calcDesc}</p>
           </div>
 
-          <div className="space-y-6 max-w-xl mx-auto">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 24, maxWidth: 512, margin: '0 auto' }}>
             <div>
-              <div className="flex items-center justify-between text-xs font-mono text-slate-300 mb-2">
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: 12, fontFamily: 'monospace', color: '#CBD5E1', marginBottom: 8 }}>
                 <span>{t.calcSliderLabel}</span>
-                <span className="text-sky-400 font-bold text-sm px-3 py-1 bg-slate-950 rounded border border-slate-700">{inquiriesPerWeek}</span>
+                <span style={{ color: '#38BDF8', fontWeight: 700, fontSize: 14, padding: '4px 10px', backgroundColor: '#070A11', borderRadius: 6, border: '1px solid #1E293B' }}>{inquiriesPerWeek}</span>
               </div>
               <input 
                 type="range" 
@@ -572,23 +573,23 @@ export default function AIAndesStudioLanding() {
                 step="5"
                 value={inquiriesPerWeek}
                 onChange={(e) => setInquiriesPerWeek(Number(e.target.value))}
-                className="w-full h-2 bg-slate-950 rounded-lg appearance-none cursor-pointer accent-sky-400"
+                style={{ width: '100%', height: 6, backgroundColor: '#070A11', borderRadius: 8, outline: 'none', cursor: 'pointer', accentColor: '#38BDF8' }}
               />
-              <div className="flex justify-between text-[10px] font-mono text-slate-500 mt-1">
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, fontFamily: 'monospace', color: '#64748B', marginTop: 6 }}>
                 <span>10 / wk</span>
                 <span>100 / wk</span>
                 <span>200+ / wk</span>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-slate-800 font-mono text-center">
-              <div className="p-4 rounded-xl bg-slate-950 border border-slate-800">
-                <div className="text-xs text-slate-400 mb-1">{t.calcHoursTitle}</div>
-                <div className="text-2xl font-bold text-sky-400">~{hoursSavedMonth} <span className="text-xs text-slate-500 font-normal">hrs / mo</span></div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, paddingTop: 16, borderTop: '1px solid #1E293B', fontFamily: 'monospace', textAlign: 'center' }}>
+              <div style={{ padding: 16, borderRadius: 12, backgroundColor: '#070A11', border: '1px solid #1E293B' }}>
+                <div style={{ fontSize: 11, color: '#94A3B8', marginBottom: 4 }}>{t.calcHoursTitle}</div>
+                <div style={{ fontSize: 22, fontWeight: 700, color: '#38BDF8' }}>~{hoursSavedMonth} <span style={{ fontSize: 12, color: '#64748B', fontWeight: 400 }}>hrs / mo</span></div>
               </div>
-              <div className="p-4 rounded-xl bg-slate-950 border border-slate-800">
-                <div className="text-xs text-slate-400 mb-1">{t.calcValTitle}</div>
-                <div className="text-2xl font-bold text-emerald-400">~€{estimatedCostSaved.toLocaleString()} <span className="text-xs text-slate-500 font-normal">/ mo</span></div>
+              <div style={{ padding: 16, borderRadius: 12, backgroundColor: '#070A11', border: '1px solid #1E293B' }}>
+                <div style={{ fontSize: 11, color: '#94A3B8', marginBottom: 4 }}>{t.calcValTitle}</div>
+                <div style={{ fontSize: 22, fontWeight: 700, color: '#10B981' }}>~€{estimatedCostSaved.toLocaleString()} <span style={{ fontSize: 12, color: '#64748B', fontWeight: 400 }}>/ mo</span></div>
               </div>
             </div>
           </div>
@@ -596,86 +597,86 @@ export default function AIAndesStudioLanding() {
       </section>
 
       {/* ─── AUDIT CONTACT FORM ─── */}
-      <section id="audit" className="py-20 px-6">
-        <div className="max-w-2xl mx-auto p-6 md:p-10 rounded-2xl bg-slate-900 border border-slate-800 shadow-xl">
-          <div className="text-center mb-8">
-            <div className="text-xs font-mono uppercase tracking-wider text-sky-400 mb-2">{t.auditBadge}</div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">{t.auditTitle}</h2>
-            <p className="text-xs text-slate-400 leading-relaxed">{t.auditDesc}</p>
+      <section id="audit" style={{ padding: '80px 24px' }}>
+        <div style={{ maxWidth: 640, margin: '0 auto', padding: 36, borderRadius: 20, backgroundColor: '#0B0F19', border: '1px solid #1E293B', boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }}>
+          <div style={{ textAlign: 'center', marginBottom: 32 }}>
+            <div style={{ fontSize: 12, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: 1, color: '#38BDF8', marginBottom: 8 }}>{t.auditBadge}</div>
+            <h2 style={{ fontSize: 26, fontWeight: 700, color: '#FFFFFF', marginBottom: 8 }}>{t.auditTitle}</h2>
+            <p style={{ fontSize: 13, color: '#94A3B8', lineHeight: 1.6 }}>{t.auditDesc}</p>
           </div>
 
           {contactSent ? (
-            <div className="p-6 rounded-xl bg-slate-950 border border-emerald-900/60 text-center font-mono space-y-2">
-              <CheckCircle2 width="32" height="32" className="text-emerald-400 mx-auto" />
-              <h3 className="text-base font-bold text-white">{t.auditSentTitle}</h3>
-              <p className="text-xs text-slate-400">{t.auditSentDesc}</p>
+            <div style={{ padding: 24, borderRadius: 12, backgroundColor: '#070A11', border: '1px solid rgba(16, 185, 129, 0.3)', textAlign: 'center', fontFamily: 'monospace' }}>
+              <CheckCircle2 width="32" height="32" color="#10B981" style={{ margin: '0 auto 12px auto' }} />
+              <h3 style={{ fontSize: 16, fontWeight: 700, color: '#FFFFFF', marginBottom: 4 }}>{t.auditSentTitle}</h3>
+              <p style={{ fontSize: 12, color: '#94A3B8' }}>{t.auditSentDesc}</p>
             </div>
           ) : (
-            <form onSubmit={(e) => { e.preventDefault(); setContactSent(true); }} className="space-y-4 text-xs font-mono">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <form onSubmit={(e) => { e.preventDefault(); setContactSent(true); }} style={{ display: 'flex', flexDirection: 'column', gap: 16, fontSize: 12, fontFamily: 'monospace' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 16 }}>
                 <div>
-                  <label className="text-slate-400 block mb-1">Your Name *</label>
+                  <label style={{ color: '#94A3B8', display: 'block', marginBottom: 6 }}>{t.auditName}</label>
                   <input 
                     required 
                     type="text" 
                     placeholder="e.g. Jean-Luc Moreau"
                     value={contactState.name}
                     onChange={(e) => setContactState({...contactState, name: e.target.value})}
-                    className="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-white focus:outline-none focus:border-sky-500"
+                    style={{ width: '100%', backgroundColor: '#070A11', border: '1px solid #334155', borderRadius: 8, padding: 12, color: '#FFFFFF', outline: 'none' }}
                   />
                 </div>
                 <div>
-                  <label className="text-slate-400 block mb-1">Work Email *</label>
+                  <label style={{ color: '#94A3B8', display: 'block', marginBottom: 6 }}>{t.auditEmail}</label>
                   <input 
                     required 
                     type="email" 
                     placeholder="jeanluc@firm.lu"
                     value={contactState.email}
                     onChange={(e) => setContactState({...contactState, email: e.target.value})}
-                    className="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-white focus:outline-none focus:border-sky-500"
+                    style={{ width: '100%', backgroundColor: '#070A11', border: '1px solid #334155', borderRadius: 8, padding: 12, color: '#FFFFFF', outline: 'none' }}
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 16 }}>
                 <div>
-                  <label className="text-slate-400 block mb-1">Company / Firm Name</label>
+                  <label style={{ color: '#94A3B8', display: 'block', marginBottom: 6 }}>{t.auditCompany}</label>
                   <input 
                     type="text" 
                     placeholder="e.g. Moreau Real Estate"
                     value={contactState.company}
                     onChange={(e) => setContactState({...contactState, company: e.target.value})}
-                    className="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-white focus:outline-none focus:border-sky-500"
+                    style={{ width: '100%', backgroundColor: '#070A11', border: '1px solid #334155', borderRadius: 8, padding: 12, color: '#FFFFFF', outline: 'none' }}
                   />
                 </div>
                 <div>
-                  <label className="text-slate-400 block mb-1">Website or LinkedIn</label>
+                  <label style={{ color: '#94A3B8', display: 'block', marginBottom: 6 }}>{t.auditWebsite}</label>
                   <input 
                     type="text" 
                     placeholder="https://moreau.lu"
                     value={contactState.website}
                     onChange={(e) => setContactState({...contactState, website: e.target.value})}
-                    className="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-white focus:outline-none focus:border-sky-500"
+                    style={{ width: '100%', backgroundColor: '#070A11', border: '1px solid #334155', borderRadius: 8, padding: 12, color: '#FFFFFF', outline: 'none' }}
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-slate-400 block mb-1">Which manual process causes the most friction today?</label>
+                <label style={{ color: '#94A3B8', display: 'block', marginBottom: 6 }}>{t.auditTask}</label>
                 <textarea 
                   rows={3}
                   placeholder="e.g. Inquiries arrive manually via email and WhatsApp. We spend too much time sorting budgets and manually booking appointments."
                   value={contactState.goal}
                   onChange={(e) => setContactState({...contactState, goal: e.target.value})}
-                  className="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-white focus:outline-none focus:border-sky-500"
+                  style={{ width: '100%', backgroundColor: '#070A11', border: '1px solid #334155', borderRadius: 8, padding: 12, color: '#FFFFFF', outline: 'none' }}
                 />
               </div>
 
               <button 
                 type="submit"
-                className="w-full py-3.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs transition-all flex items-center justify-center gap-2 shadow-md"
+                style={{ width: '100%', padding: '16px', borderRadius: 10, backgroundColor: '#38BDF8', color: '#090D16', border: 'none', fontWeight: 700, fontSize: 14, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginTop: 8 }}
               >
-                <Send width="14" height="14" />
+                <Send width="16" height="16" />
                 {t.auditSubmit}
               </button>
             </form>
@@ -684,10 +685,10 @@ export default function AIAndesStudioLanding() {
       </section>
 
       {/* ─── FOOTER ─── */}
-      <footer className="py-8 px-6 border-t border-slate-800 text-xs font-mono text-slate-500">
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div>© 2026 AI Andes Studio. Systems & Workflow Engineering.</div>
-          <div className="text-slate-400">Luxembourg · Switzerland · Belgium · Global B2B</div>
+      <footer style={{ padding: '32px 24px', borderTop: '1px solid #1E293B', fontSize: 12, fontFamily: 'monospace', color: '#64748B', backgroundColor: '#05070B' }}>
+        <div style={{ maxWidth: 1152, margin: '0 auto', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
+          <div>{t.footerCopy}</div>
+          <div style={{ color: '#94A3B8' }}>Luxembourg · Switzerland · Belgium · Global B2B</div>
         </div>
       </footer>
 
