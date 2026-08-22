@@ -1,28 +1,9 @@
 import type { Metadata } from 'next';
-import { Plus_Jakarta_Sans, Space_Grotesk, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 
-const plusJakarta = Plus_Jakarta_Sans({
-  subsets: ['latin'],
-  variable: '--font-sans',
-  weight: ['400', '500', '600', '700'],
-});
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
-  variable: '--font-space',
-  weight: ['600', '700'],
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-mono',
-  weight: ['400', '500'],
-});
-
 export const metadata: Metadata = {
-  title: 'AI Andes Studio — Workflow Engineering & Digital Systems',
-  description: 'AI-assisted intake workflows, operational pipelines and dashboards for businesses in Europe.',
+  title: 'AI Andes Studio — Workflow Systems & Intelligent Automations',
+  description: 'AI-assisted intake workflows, operational pipelines and dashboards for European businesses.',
 };
 
 export default function RootLayout({
@@ -31,8 +12,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${plusJakarta.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} dark`}>
-      <body className="bg-[#06080E] text-zinc-100 font-sans antialiased selection:bg-sky-500/30 selection:text-white">
+    <html lang="en">
+      <body className="bg-[#070A11] text-slate-100 antialiased overflow-x-hidden">
         {children}
       </body>
     </html>
