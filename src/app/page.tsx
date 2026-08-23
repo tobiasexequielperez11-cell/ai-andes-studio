@@ -28,31 +28,48 @@ import {
   Clock,
   ArrowUpRight,
   Code2,
-  FileText
+  FileText,
+  SlidersHorizontal,
+  Bot,
+  Flame,
+  LayoutDashboard
 } from 'lucide-react';
 
 export default function AIAndesStudioLanding() {
   const [lang, setLang] = useState<'en' | 'es'>('en');
 
-  // Hero Window State
-  const [heroTab, setHeroTab] = useState<'trace' | 'payload' | 'dispatch'>('trace');
+  // Hero Window Tab State
+  const [heroTab, setHeroTab] = useState<'flow' | 'json' | 'crm'>('flow');
+  const [activeHeroNode, setActiveHeroNode] = useState<number>(2);
 
-  // Natural Language Search Presets (Roomix Style)
+  // Natural Language Search State (Roomix Style)
   const [nlQuery, setNlQuery] = useState('Looking for a 2-bedroom rental in Luxembourg Kirchberg, budget max €1,900/mo, urgent moving date');
-  const [nlOutput, setNlOutput] = useState<{ score: number; intent: string; budget: string; location: string; status: string } | null>({
+  const [nlOutput, setNlOutput] = useState<{ score: number; intent: string; budget: string; location: string; action: string } | null>({
     score: 98,
-    intent: 'Rental · 2 Bedrooms',
+    intent: 'Property Rental · 2 Beds',
     budget: '€1,900 / month',
     location: 'Luxembourg City (Kirchberg)',
-    status: 'Matched 3 portfolio properties · Instant viewing link dispatched'
+    action: 'Matched 3 verified properties · Instant tour link dispatched via WhatsApp API'
   });
 
   // Sandbox State
   const [sandboxTab, setSandboxTab] = useState<'re' | 'clinic'>('re');
-  const [reBudget, setReBudget] = useState('1850');
-  const [reRooms, setReRooms] = useState('2');
-  const [reLocation, setReLocation] = useState('Luxembourg (Kirchberg)');
-  const [reExecuted, setReExecuted] = useState(false);
+  const [reStep, setReStep] = useState(1);
+  const [reForm, setReForm] = useState({
+    name: 'Jean-Luc Moreau',
+    intent: 'rent',
+    budget: '1850',
+    location: 'Luxembourg (Kirchberg)',
+    rooms: '2'
+  });
+
+  const [clinicStep, setClinicStep] = useState(1);
+  const [clinicForm, setClinicForm] = useState({
+    service: 'Nutritional & Metabolic Health',
+    symptom: 'Dietary transition & chronic fatigue',
+    timeSlot: 'Thursday 15:30',
+    patient: 'Sophie Laurent'
+  });
 
   // ROI Calculator
   const [weeklyVolume, setWeeklyVolume] = useState(45);
@@ -67,23 +84,36 @@ export default function AIAndesStudioLanding() {
     en: {
       topBanner: 'Bespoke AI systems for European businesses · Luxembourg · Switzerland · Belgium',
       badge: 'Boutique Workflow Engineering for EU Firms',
-      h1_1: 'Turn manual business friction into ',
-      h1_accent: 'automated precision',
+      h1_1: 'We engineer digital systems that ',
+      h1_accent: 'eliminate admin friction',
       h1_2: '.',
-      heroLead: 'We build high-converting web portals, intelligent intake pipelines, and automated team dashboards that eliminate repetitive admin work for businesses across Europe.',
+      heroLead: 'We replace scattered WhatsApp messages, manual spreadsheets, and delayed email replies with bespoke websites, smart intake forms, and automated team dashboards.',
       btnAudit: 'Request Free Workflow Audit',
-      btnDemos: 'Explore Live Engine',
+      btnDemos: 'Test Live Engine',
       metric1: '5–14 Days Turnaround',
       metric2: 'Vercel Edge Global',
       metric3: 'GDPR-Aligned & 2FA',
-      
-      // Hero Inspector Window
+      navFramework: 'Methodology',
+      navSimulator: 'NL Simulator',
+      navSandboxes: 'Live Sandboxes',
+      navOutcomes: 'Outcomes',
+      navRoi: 'ROI Calculator',
+      navScope: 'Scope',
+      navCta: 'Free Audit',
+
+      // Hero Mockup
       windowHost: 'engine.ai-andes.studio · v2.4',
-      tabTrace: 'Execution Trace',
-      tabPayload: 'JSON Extraction',
-      tabDispatch: 'Notion Sync',
-      
-      // Natural Language
+      tabFlow: 'Live Flow Pipeline',
+      tabJson: 'JSON Extraction',
+      tabCrm: 'Notion CRM Stream',
+      node1Title: '01. Client Intake',
+      node1Sub: 'Web / WhatsApp Portal',
+      node2Title: '02. Edge AI Reasoning',
+      node2Sub: 'Score: 96% · Intent Parsed',
+      node3Title: '03. Operational Dispatch',
+      node3Sub: 'Notion / Cal.com / Alerts',
+
+      // Roomix Natural Language
       nlBadge: 'Natural Language Intake Engine',
       nlTitle: 'Experience how plain text turns into structured data',
       nlDesc: 'Click a business scenario or edit the input to test the live parameter extraction:',
@@ -109,6 +139,42 @@ export default function AIAndesStudioLanding() {
       p4Tasks: '8 of 8 tasks completed (100%)',
       p4Desc: 'Operational handover, team video walkthrough, GDPR data minimization verification, and 2FA access control.',
 
+      // Sandboxes
+      sandBadge: 'Interactive Sandboxes',
+      sandTitle: 'Test our automation workflows in real-time',
+      sandDesc: 'Experience how raw customer inquiries turn into structured, qualified records instantly.',
+      demo1Tab: 'Real Estate Workflow',
+      demo2Tab: 'Clinic & Triage Workflow',
+
+      // Real Estate Form
+      reNameLabel: 'Client Full Name',
+      reIntentLabel: 'Inquiry Intent',
+      reRent: 'Property Rental',
+      reBuy: 'Property Purchase',
+      reBudgetLabel: 'Target Budget (€/mo or Total)',
+      reRoomsLabel: 'Bedrooms',
+      reZoneLabel: 'Target Zone / City',
+      reRunBtn: 'Process Inquiry & Generate AI Brief',
+      reResultTitle: 'AI Executive Brief Generated',
+      reResultScore: 'High Intent Lead · Match 96%',
+      reResultText: (n: string, r: string, i: string, loc: string, b: string) => `"${n} submitted a ${r}-bedroom ${i} request in ${loc} with a budget of €${b}. Matched 3 active units in portfolio. Auto-invite for viewing dispatched."`,
+      reResetBtn: 'Test Another Scenario',
+
+      // Clinic Form
+      clSrvLabel: 'Medical / Health Specialty',
+      clSrv1: 'Nutritional & Metabolic Health',
+      clSrv2: 'Dental Aesthetics & Implantology',
+      clSrv3: 'Physiotherapy & Rehabilitation',
+      clSymLabel: 'Chief Complaint / Goal',
+      clTimeLabel: 'Selected Time Window',
+      clTime1: 'Morning (09:00 - 12:30)',
+      clTime2: 'Afternoon (14:30 - 18:30)',
+      clRunBtn: 'Execute Automated Triage & Booking',
+      clResultTitle: 'Patient Pre-Allocated',
+      clResultTag: 'Automated Triage Confirmed',
+      clResultText: (srv: string, sym: string, slot: string) => `"Patient booked for ${srv}. Stated focus: ${sym}. Calendar slot held for ${slot}. Automated SMS confirmation dispatched."`,
+      clResetBtn: 'Test Another Triage',
+
       // Calculator
       calcBadge: 'Measurable Financial ROI',
       calcTitle: 'Calculate your monthly operational savings',
@@ -118,7 +184,7 @@ export default function AIAndesStudioLanding() {
       calcVal: 'Estimated Value Recovered',
       calcNote: 'Based on €45/hr average professional staff cost in Western Europe',
 
-      // Outcomes
+      // Cases
       caseBadge: 'Demonstrated Outcomes',
       caseTitle: 'Real operational transformations',
       case1Title: 'Boutique Real Estate Agency (Luxembourg)',
@@ -129,6 +195,20 @@ export default function AIAndesStudioLanding() {
       case2Before: 'Staff manually logged patient symptoms and changes on paper, suffering an 18% no-show rate.',
       case2After: 'Online symptom triage with automated calendar sync and 24h WhatsApp reminders. No-shows dropped to <3%.',
       case2Stat: 'No-show rate dropped to 2.8%',
+
+      // Scope
+      scopeBadge: 'Delivery Standards',
+      scopeTitle: 'Explicit scope boundaries',
+      scopeDesc: 'We deliver focused systems with defined deliverables and honest execution.',
+      scopeInTitle: 'What we engineer',
+      scopeIn1: '• Bespoke Next.js websites & high-converting intake pages',
+      scopeIn2: '• Automated data pipelines (Notion, Airtable, Webhooks, APIs)',
+      scopeIn3: '• Internal dashboards & client tracking status pipelines',
+      scopeIn4: '• Privacy-first setup with 2FA and strict data minimization',
+      scopeOutTitle: 'What we do not do',
+      scopeOut1: '• No endless, undefined monolithic custom software',
+      scopeOut2: '• No black-box unsupervised AI: all workflows have human checkpoints',
+      scopeOut3: '• We do not replace certified ERPs or government accounting tools',
 
       // Audit Form
       auditBadge: 'Zero-Risk Discovery',
@@ -156,14 +236,27 @@ export default function AIAndesStudioLanding() {
       metric1: 'Entrega en 5 a 14 Días',
       metric2: 'Vercel Edge Global',
       metric3: 'Alineado a GDPR y 2FA',
+      navFramework: 'Metodología',
+      navSimulator: 'Simulador NL',
+      navSandboxes: 'Demos en Vivo',
+      navOutcomes: 'Casos Reales',
+      navRoi: 'Calculadora ROI',
+      navScope: 'Alcance',
+      navCta: 'Auditoría Gratis',
 
-      // Hero Inspector Window
+      // Hero Mockup
       windowHost: 'motor.ai-andes.studio · v2.4',
-      tabTrace: 'Traza de Ejecución',
-      tabPayload: 'Extracción JSON',
-      tabDispatch: 'Sincronización Notion',
+      tabFlow: 'Tubería de Flujo en Vivo',
+      tabJson: 'Extracción JSON',
+      tabCrm: 'Flujo Notion CRM',
+      node1Title: '01. Ingreso del Cliente',
+      node1Sub: 'Portal Web / WhatsApp',
+      node2Title: '02. Razonamiento IA en Edge',
+      node2Sub: 'Score: 96% · Parámetros Listos',
+      node3Title: '03. Despacho a Operaciones',
+      node3Sub: 'Notion / Cal.com / Alertas',
 
-      // Natural Language
+      // Roomix Natural Language
       nlBadge: 'Motor de Intake en Lenguaje Natural',
       nlTitle: 'Prueba cómo el texto libre se convierte en datos estructurados',
       nlDesc: 'Haz clic en un escenario de negocio o escribe una consulta para probar la extracción en vivo:',
@@ -189,6 +282,42 @@ export default function AIAndesStudioLanding() {
       p4Tasks: '8 de 8 tareas completadas (100%)',
       p4Desc: 'Traspaso operativo, video explicativo al equipo, verificación de minimización de datos (GDPR) y seguridad 2FA.',
 
+      // Sandboxes
+      sandBadge: 'Sandboxes Interactivos',
+      sandTitle: 'Prueba nuestros flujos de automatización en tiempo real',
+      sandDesc: 'Observa cómo una consulta se convierte en un registro operativo calificado al instante.',
+      demo1Tab: 'Flujo Inmobiliario',
+      demo2Tab: 'Flujo Clínico / Triaje',
+
+      // Real Estate Form
+      reNameLabel: 'Nombre del Cliente',
+      reIntentLabel: 'Tipo de Consulta',
+      reRent: 'Alquiler',
+      reBuy: 'Compra',
+      reBudgetLabel: 'Presupuesto (€/mes o Total)',
+      reRoomsLabel: 'Ambientes / Habitaciones',
+      reZoneLabel: 'Zona / Ciudad',
+      reRunBtn: 'Procesar Consulta y Generar Ficha IA',
+      reResultTitle: 'Ficha Ejecutiva Generada',
+      reResultScore: 'Lead de Alta Prioridad · Coincidencia 96%',
+      reResultText: (n: string, r: string, i: string, loc: string, b: string) => `"${n} solicitó ${i === 'rent' ? 'alquiler' : 'compra'} de ${r} habitaciones en ${loc} con presupuesto de €${b}. Coincide con 3 propiedades disponibles. Invitación a visita despachada automáticamente."`,
+      reResetBtn: 'Probar Otro Escenario',
+
+      // Clinic Form
+      clSrvLabel: 'Especialidad Médica / Salud',
+      clSrv1: 'Salud Nutricional y Metabólica',
+      clSrv2: 'Estética Dental e Implantología',
+      clSrv3: 'Fisioterapia y Rehabilitación',
+      clSymLabel: 'Motivo de Consulta / Síntoma',
+      clTimeLabel: 'Franja Horaria Seleccionada',
+      clTime1: 'Mañana (09:00 - 12:30)',
+      clTime2: 'Tarde (14:30 - 18:30)',
+      clRunBtn: 'Ejecutar Triaje y Reserva Automática',
+      clResultTitle: 'Paciente Pre-Asignado',
+      clResultTag: 'Triaje Automatizado Confirmado',
+      clResultText: (srv: string, sym: string, slot: string) => `"Paciente registrado para ${srv}. Motivo: ${sym}. Turno bloqueado para ${slot}. Confirmación por SMS despachada."`,
+      clResetBtn: 'Probar Otro Triaje',
+
       // Calculator
       calcBadge: 'Retorno Medible (ROI)',
       calcTitle: 'Calcula tu ahorro mensual de tiempo y dinero',
@@ -210,6 +339,20 @@ export default function AIAndesStudioLanding() {
       case2After: 'Triaje de síntomas online con sincronización de agenda y recordatorios 24h por WhatsApp. Inasistencias < 3%.',
       case2Stat: 'Inasistencias reducidas a 2.8%',
 
+      // Scope
+      scopeBadge: 'Estándares de Entrega',
+      scopeTitle: 'Límites de alcance explícitos',
+      scopeDesc: 'Entregamos sistemas modulares con parámetros definidos y ejecución transparente.',
+      scopeInTitle: 'Lo que construimos',
+      scopeIn1: '• Sitios web Next.js a medida y páginas de captación optimizadas',
+      scopeIn2: '• Pipelines de datos automáticos (Notion, Airtable, Webhooks, APIs)',
+      scopeIn3: '• Paneles internos y tableros de seguimiento operativo',
+      scopeIn4: '• Configuración segura con 2FA y minimización de datos',
+      scopeOutTitle: 'Lo que NO hacemos',
+      scopeOut1: '• No hacemos desarrollo de software monolítico indefinido sin etapas claras',
+      scopeOut2: '• No vendemos IA de caja negra sin supervisión: todo flujo tiene control humano',
+      scopeOut3: '• No reemplazamos ERPs certificados ni sistemas contables oficiales',
+
       // Audit Form
       auditBadge: 'Descubrimiento sin Riesgo',
       auditTitle: 'Solicita una auditoría de flujo en 3 puntos',
@@ -226,16 +369,16 @@ export default function AIAndesStudioLanding() {
     }
   }[lang];
 
-  // Presets Click Handler
+  // Presets Loader
   const loadPreset = (type: string) => {
     if (type === 're') {
       setNlQuery('Looking for a 2-bedroom rental in Luxembourg Kirchberg, budget max €1,900/mo, urgent moving date');
       setNlOutput({
         score: 98,
-        intent: 'Rental · 2 Bedrooms',
+        intent: 'Property Rental · 2 Bedrooms',
         budget: '€1,900 / month',
         location: 'Luxembourg City (Kirchberg)',
-        status: 'Matched 3 portfolio properties · Instant viewing link dispatched via WhatsApp'
+        action: 'Matched 3 portfolio properties · Instant viewing link dispatched via WhatsApp'
       });
     } else if (type === 'clinic') {
       setNlQuery('Need a consultation for metabolic health and chronic fatigue on Thursday afternoon, patient Sophie Laurent');
@@ -244,7 +387,7 @@ export default function AIAndesStudioLanding() {
         intent: 'Nutritional & Metabolic Health',
         budget: 'Standard Consultation (€120)',
         location: 'Brussels Clinic (Avenue Louise)',
-        status: 'Appointment held for Thursday 15:30 · Confirmation SMS queued'
+        action: 'Appointment held for Thursday 15:30 · Confirmation SMS queued'
       });
     } else if (type === 'legal') {
       setNlQuery('Corporate contract review for Swiss subsidiary, urgent 48h deadline, document length 14 pages');
@@ -253,27 +396,31 @@ export default function AIAndesStudioLanding() {
         intent: 'Corporate Document Audit',
         budget: 'Priority Expedited Intake',
         location: 'Zurich Financial District',
-        status: 'Checklist created in Notion · Partner alerted with document brief'
+        action: 'Checklist created in Notion · Partner alerted with document brief'
       });
     }
   };
 
   return (
-    <div style={{ backgroundColor: '#06080E', minHeight: '100vh', color: '#F1F5F9', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+    <div style={{ backgroundColor: '#05070E', minHeight: '100vh', color: '#F1F5F9', position: 'relative', overflowX: 'hidden' }}>
       
+      {/* ─── ATMOSPHERIC LIGHTING HALOS ─── */}
+      <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', width: '800px', height: '400px', background: 'radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, rgba(99, 102, 241, 0.05) 50%, transparent 80%)', filter: 'blur(120px)', pointerEvents: 'none', zIndex: 0 }} />
+      <div style={{ position: 'absolute', top: '900px', right: '-150px', width: '600px', height: '400px', background: 'radial-gradient(circle, rgba(6, 182, 212, 0.08) 0%, transparent 70%)', filter: 'blur(140px)', pointerEvents: 'none', zIndex: 0 }} />
+
       {/* ─── TOP NOTIFICATION STRIP ─── */}
-      <div style={{ backgroundColor: 'rgba(56, 189, 248, 0.08)', borderBottom: '1px solid rgba(56, 189, 248, 0.2)', padding: '8px 16px', textAlign: 'center', fontSize: '11px', fontFamily: 'monospace', color: '#38BDF8', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-        <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#38BDF8', display: 'inline-block' }} />
+      <div style={{ position: 'relative', zIndex: 50, backgroundColor: 'rgba(56, 189, 248, 0.06)', borderBottom: '1px solid rgba(56, 189, 248, 0.18)', padding: '9px 16px', textAlign: 'center', fontSize: '11px', fontFamily: 'monospace', color: '#38BDF8', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+        <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#38BDF8', display: 'inline-block', boxShadow: '0 0 8px #38BDF8' }} />
         <span>{t.topBanner}</span>
       </div>
 
-      {/* ─── NAVBAR ─── */}
-      <header style={{ backgroundColor: 'rgba(6, 8, 14, 0.95)', borderBottom: '1px solid #1E293B', position: 'sticky', top: 0, zIndex: 50, backdropFilter: 'blur(16px)' }}>
+      {/* ─── NAVBAR WITH GLASS EFFECT ─── */}
+      <header style={{ backgroundColor: 'rgba(5, 7, 14, 0.85)', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', position: 'sticky', top: 0, zIndex: 50, backdropFilter: 'blur(20px)' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 24px', height: '72px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           
-          {/* Logo with 38px Box */}
+          {/* Logo Box */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div style={{ width: '38px', height: '38px', borderRadius: '10px', backgroundColor: '#0F172A', border: '1px solid #38BDF8', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: '0 0 16px rgba(56, 189, 248, 0.25)' }}>
+            <div style={{ width: '38px', height: '38px', borderRadius: '10px', backgroundColor: '#0B1120', border: '1px solid rgba(56, 189, 248, 0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: '0 0 20px rgba(56, 189, 248, 0.2)' }}>
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M3 20h18L14 4l-4 7-3-4-4 13z" fill="rgba(56, 189, 248, 0.15)" />
                 <path d="M14 4l7 16H3l4-13 3 4 4-7z" />
@@ -281,24 +428,25 @@ export default function AIAndesStudioLanding() {
               </svg>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <span style={{ fontWeight: 800, fontSize: '16px', color: '#FFFFFF', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                AI Andes <span style={{ color: '#38BDF8', fontSize: '10px', padding: '2px 6px', borderRadius: '4px', backgroundColor: 'rgba(56,189,248,0.1)', border: '1px solid rgba(56,189,248,0.3)', fontFamily: 'monospace', fontWeight: 700 }}>STUDIO</span>
+              <span style={{ fontWeight: 800, fontSize: '16px', color: '#FFFFFF', display: 'flex', alignItems: 'center', gap: '6px', letterSpacing: '-0.3px' }}>
+                AI Andes <span style={{ color: '#38BDF8', fontSize: '10px', padding: '2px 6px', borderRadius: '4px', backgroundColor: 'rgba(56,189,248,0.12)', border: '1px solid rgba(56,189,248,0.3)', fontFamily: 'monospace', fontWeight: 700 }}>STUDIO</span>
               </span>
-              <span style={{ fontSize: '10px', color: '#94A3B8', fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '1px' }}>Systems & Automations</span>
+              <span style={{ fontSize: '10px', color: '#64748B', fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '1px' }}>Systems & Automations</span>
             </div>
           </div>
 
-          {/* Links */}
+          {/* Nav Links */}
           <nav style={{ display: 'none', alignItems: 'center', gap: '28px', fontSize: '12px', fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '1px' }} className="md:flex">
-            <a href="#simulator" style={{ color: '#94A3B8', textDecoration: 'none' }}>Simulator</a>
-            <a href="#framework" style={{ color: '#94A3B8', textDecoration: 'none' }}>{t.fardoBadge}</a>
-            <a href="#outcomes" style={{ color: '#94A3B8', textDecoration: 'none' }}>{t.caseBadge}</a>
-            <a href="#roi" style={{ color: '#94A3B8', textDecoration: 'none' }}>ROI</a>
+            <a href="#simulator" style={{ color: '#94A3B8', textDecoration: 'none', transition: 'color 0.2s' }}>{t.navSimulator}</a>
+            <a href="#framework" style={{ color: '#94A3B8', textDecoration: 'none', transition: 'color 0.2s' }}>{t.navFramework}</a>
+            <a href="#sandboxes" style={{ color: '#94A3B8', textDecoration: 'none', transition: 'color 0.2s' }}>{t.navSandboxes}</a>
+            <a href="#outcomes" style={{ color: '#94A3B8', textDecoration: 'none', transition: 'color 0.2s' }}>{t.navOutcomes}</a>
+            <a href="#roi" style={{ color: '#94A3B8', textDecoration: 'none', transition: 'color 0.2s' }}>{t.navRoi}</a>
           </nav>
 
-          {/* Language Switch & CTA */}
+          {/* Controls */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', padding: '3px', borderRadius: '8px', backgroundColor: '#0F172A', border: '1px solid #1E293B', fontSize: '12px', fontFamily: 'monospace' }}>
+            <div style={{ display: 'flex', alignItems: 'center', padding: '3px', borderRadius: '8px', backgroundColor: 'rgba(15, 23, 42, 0.8)', border: '1px solid rgba(255, 255, 255, 0.1)', fontSize: '12px', fontFamily: 'monospace' }}>
               <button 
                 type="button" 
                 onClick={() => setLang('en')}
@@ -317,54 +465,54 @@ export default function AIAndesStudioLanding() {
 
             <a 
               href="#audit"
-              style={{ padding: '9px 18px', borderRadius: '8px', backgroundColor: '#38BDF8', color: '#06080E', fontWeight: 800, fontSize: '12px', textDecoration: 'none', textTransform: 'uppercase', fontFamily: 'monospace', display: 'none', boxShadow: '0 0 16px rgba(56, 189, 248, 0.25)' }}
+              style={{ padding: '10px 20px', borderRadius: '10px', backgroundColor: '#38BDF8', color: '#06080E', fontWeight: 800, fontSize: '12px', textDecoration: 'none', textTransform: 'uppercase', fontFamily: 'monospace', display: 'none', boxShadow: '0 0 20px rgba(56, 189, 248, 0.35)' }}
               className="sm:inline-block"
             >
-              {t.btnAudit}
+              {t.navCta}
             </a>
           </div>
 
         </div>
       </header>
 
-      {/* ─── 2-COLUMN HERO (LINEAR / GREGO.AI HYBRID) ─── */}
-      <section style={{ padding: '80px 24px 64px 24px', borderBottom: '1px solid #1E293B' }}>
+      {/* ─── 2-COLUMN ASYMMETRIC HERO SECTION ─── */}
+      <section style={{ position: 'relative', zIndex: 10, padding: '80px 24px 64px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '48px', alignItems: 'center' }}>
           
-          {/* Left Column: Value Prop */}
+          {/* Left Column: Core Value Proposition */}
           <div style={{ textAlign: 'left' }}>
             
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 14px', borderRadius: '9999px', border: '1px solid rgba(56, 189, 248, 0.3)', backgroundColor: 'rgba(56, 189, 248, 0.06)', fontSize: '11px', fontFamily: 'monospace', color: '#38BDF8', marginBottom: '20px' }}>
-              <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#38BDF8', display: 'inline-block' }} />
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 14px', borderRadius: '9999px', border: '1px solid rgba(56, 189, 248, 0.35)', backgroundColor: 'rgba(56, 189, 248, 0.06)', fontSize: '11px', fontFamily: 'monospace', color: '#38BDF8', marginBottom: '20px' }}>
+              <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#38BDF8', display: 'inline-block', boxShadow: '0 0 8px #38BDF8' }} />
               {t.badge}
             </div>
 
-            <h1 style={{ fontSize: 'clamp(32px, 4vw, 54px)', fontWeight: 800, lineHeight: 1.1, color: '#FFFFFF', marginBottom: '20px', letterSpacing: '-1.2px' }}>
-              {t.h1_1}<span style={{ color: '#38BDF8' }}>{t.h1_accent}</span>{t.h1_2}
+            <h1 style={{ fontSize: 'clamp(34px, 4.2vw, 56px)', fontWeight: 800, lineHeight: 1.08, color: '#FFFFFF', marginBottom: '22px', letterSpacing: '-1.5px' }}>
+              {t.h1_1}<span style={{ color: '#38BDF8', textShadow: '0 0 30px rgba(56,189,248,0.3)' }}>{t.h1_accent}</span>{t.h1_2}
             </h1>
 
-            <p style={{ fontSize: '16px', color: '#94A3B8', lineHeight: 1.6, marginBottom: '32px', maxWidth: '520px' }}>
+            <p style={{ fontSize: '16px', color: '#94A3B8', lineHeight: 1.65, marginBottom: '32px', maxWidth: '520px' }}>
               {t.heroLead}
             </p>
 
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '14px', marginBottom: '40px' }}>
               <a 
                 href="#audit"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '14px 28px', borderRadius: '10px', backgroundColor: '#38BDF8', color: '#06080E', fontWeight: 800, fontSize: '13px', textDecoration: 'none', boxShadow: '0 0 24px rgba(56, 189, 248, 0.35)' }}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '15px 30px', borderRadius: '12px', backgroundColor: '#38BDF8', color: '#06080E', fontWeight: 800, fontSize: '14px', textDecoration: 'none', boxShadow: '0 0 28px rgba(56, 189, 248, 0.4)' }}
               >
                 {t.btnAudit}
                 <ArrowRight width="16" height="16" />
               </a>
               <a 
                 href="#simulator"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '14px 24px', borderRadius: '10px', backgroundColor: '#0F172A', border: '1px solid #334155', color: '#E2E8F0', fontWeight: 600, fontSize: '13px', textDecoration: 'none' }}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '15px 26px', borderRadius: '12px', backgroundColor: 'rgba(15, 23, 42, 0.8)', border: '1px solid rgba(255, 255, 255, 0.12)', color: '#E2E8F0', fontWeight: 600, fontSize: '14px', textDecoration: 'none' }}
               >
                 {t.btnDemos}
               </a>
             </div>
 
-            {/* Quick Metrics */}
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', fontFamily: 'monospace', fontSize: '11px', color: '#64748B', paddingTop: '20px', borderTop: '1px solid #1E293B' }}>
+            {/* Quick Metrics Bar */}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', fontFamily: 'monospace', fontSize: '11px', color: '#64748B', paddingTop: '20px', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#CBD5E1' }}>
                 <Check width="14" height="14" color="#38BDF8" /> {t.metric1}
               </div>
@@ -378,81 +526,115 @@ export default function AIAndesStudioLanding() {
 
           </div>
 
-          {/* Right Column: Grego.ai-Style Code & System Inspector */}
-          <div style={{ borderRadius: '16px', backgroundColor: '#070A12', border: '1px solid #1E293B', boxShadow: '0 24px 48px rgba(0,0,0,0.7)', overflow: 'hidden' }}>
+          {/* Right Column: High-Fidelity App Mockup (Linear / Grego style) */}
+          <div style={{ borderRadius: '20px', backgroundColor: '#070A14', border: '1px solid rgba(56, 189, 248, 0.25)', boxShadow: '0 24px 60px rgba(0,0,0,0.8), 0 0 40px rgba(56, 189, 248, 0.12)', overflow: 'hidden' }}>
             
-            {/* Window Top Bar */}
-            <div style={{ backgroundColor: '#0B0F19', padding: '12px 18px', borderBottom: '1px solid #1E293B', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            {/* Window Top Chrome */}
+            <div style={{ backgroundColor: '#0B1120', padding: '12px 18px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#EF4444', display: 'inline-block' }} />
                 <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#F59E0B', display: 'inline-block' }} />
                 <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#10B981', display: 'inline-block' }} />
-                <span style={{ marginLeft: '8px', fontSize: '11px', fontFamily: 'monospace', color: '#64748B' }}>{t.windowHost}</span>
+                <span style={{ marginLeft: '10px', fontSize: '11px', fontFamily: 'monospace', color: '#64748B' }}>{t.windowHost}</span>
               </div>
               <div style={{ display: 'flex', gap: '6px', fontSize: '11px', fontFamily: 'monospace' }}>
                 <button 
                   type="button" 
-                  onClick={() => setHeroTab('trace')}
-                  style={{ padding: '3px 8px', borderRadius: '4px', border: 'none', cursor: 'pointer', backgroundColor: heroTab === 'trace' ? '#1E293B' : 'transparent', color: heroTab === 'trace' ? '#38BDF8' : '#64748B' }}
+                  onClick={() => setHeroTab('flow')}
+                  style={{ padding: '4px 10px', borderRadius: '5px', border: 'none', cursor: 'pointer', backgroundColor: heroTab === 'flow' ? '#1E293B' : 'transparent', color: heroTab === 'flow' ? '#38BDF8' : '#64748B', fontWeight: heroTab === 'flow' ? 700 : 400 }}
                 >
-                  {t.tabTrace}
+                  {t.tabFlow}
                 </button>
                 <button 
                   type="button" 
-                  onClick={() => setHeroTab('payload')}
-                  style={{ padding: '3px 8px', borderRadius: '4px', border: 'none', cursor: 'pointer', backgroundColor: heroTab === 'payload' ? '#1E293B' : 'transparent', color: heroTab === 'payload' ? '#38BDF8' : '#64748B' }}
+                  onClick={() => setHeroTab('json')}
+                  style={{ padding: '4px 10px', borderRadius: '5px', border: 'none', cursor: 'pointer', backgroundColor: heroTab === 'json' ? '#1E293B' : 'transparent', color: heroTab === 'json' ? '#38BDF8' : '#64748B', fontWeight: heroTab === 'json' ? 700 : 400 }}
                 >
-                  {t.tabPayload}
+                  {t.tabJson}
                 </button>
                 <button 
                   type="button" 
-                  onClick={() => setHeroTab('dispatch')}
-                  style={{ padding: '3px 8px', borderRadius: '4px', border: 'none', cursor: 'pointer', backgroundColor: heroTab === 'dispatch' ? '#1E293B' : 'transparent', color: heroTab === 'dispatch' ? '#38BDF8' : '#64748B' }}
+                  onClick={() => setHeroTab('crm')}
+                  style={{ padding: '4px 10px', borderRadius: '5px', border: 'none', cursor: 'pointer', backgroundColor: heroTab === 'crm' ? '#1E293B' : 'transparent', color: heroTab === 'crm' ? '#38BDF8' : '#64748B', fontWeight: heroTab === 'crm' ? 700 : 400 }}
                 >
-                  {t.tabDispatch}
+                  {t.tabCrm}
                 </button>
               </div>
             </div>
 
             {/* Window Content */}
-            <div style={{ padding: '20px', fontFamily: 'monospace', fontSize: '12px', lineHeight: '1.9' }}>
-              {heroTab === 'trace' && (
+            <div style={{ padding: '22px' }}>
+              {heroTab === 'flow' && (
                 <div>
-                  <div style={{ color: '#10B981' }}>✔ Ingesting customer intake payload from Luxembourg portal...</div>
-                  <div style={{ color: '#38BDF8' }}>✔ Parsing parameters: intent=&quot;rental&quot;, budget=&quot;€1,850&quot;, rooms=2...</div>
-                  <div style={{ color: '#94A3B8' }}>✔ Cross-checking available units in Notion database...</div>
-                  <div style={{ color: '#F59E0B', fontWeight: 700 }}>✔ Lead score computed: 96/100 (High intent · Qualified budget)</div>
-                  <div style={{ color: '#38BDF8' }}>✔ Dispatching viewing appointment link via automated WhatsApp API...</div>
-                  <div style={{ color: '#10B981', fontWeight: 700, borderTop: '1px dashed #1E293B', paddingTop: '8px', marginTop: '8px' }}>
-                    ✔ Pipeline complete: Notion record #4912 created in 1.18s
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px', fontFamily: 'monospace', fontSize: '12px', marginBottom: '16px' }}>
+                    <button 
+                      type="button" 
+                      onClick={() => setActiveHeroNode(1)}
+                      style={{ padding: '14px', borderRadius: '12px', border: activeHeroNode === 1 ? '1px solid #38BDF8' : '1px solid rgba(255,255,255,0.08)', backgroundColor: activeHeroNode === 1 ? 'rgba(56, 189, 248, 0.12)' : '#070A11', textAlign: 'left', cursor: 'pointer' }}
+                    >
+                      <div style={{ fontSize: '10px', color: '#38BDF8', fontWeight: 800, marginBottom: '4px' }}>STEP 01</div>
+                      <div style={{ fontWeight: 700, color: '#FFFFFF', fontSize: '12px' }}>{t.node1Title}</div>
+                      <div style={{ fontSize: '10px', color: '#94A3B8', marginTop: '4px' }}>{t.node1Sub}</div>
+                    </button>
+
+                    <button 
+                      type="button" 
+                      onClick={() => setActiveHeroNode(2)}
+                      style={{ padding: '14px', borderRadius: '12px', border: activeHeroNode === 2 ? '1px solid #38BDF8' : '1px solid rgba(255,255,255,0.08)', backgroundColor: activeHeroNode === 2 ? 'rgba(56, 189, 248, 0.12)' : '#070A11', textAlign: 'left', cursor: 'pointer' }}
+                    >
+                      <div style={{ fontSize: '10px', color: '#38BDF8', fontWeight: 800, marginBottom: '4px' }}>STEP 02</div>
+                      <div style={{ fontWeight: 700, color: '#FFFFFF', fontSize: '12px' }}>{t.node2Title}</div>
+                      <div style={{ fontSize: '10px', color: '#94A3B8', marginTop: '4px' }}>{t.node2Sub}</div>
+                    </button>
+
+                    <button 
+                      type="button" 
+                      onClick={() => setActiveHeroNode(3)}
+                      style={{ padding: '14px', borderRadius: '12px', border: activeHeroNode === 3 ? '1px solid #38BDF8' : '1px solid rgba(255,255,255,0.08)', backgroundColor: activeHeroNode === 3 ? 'rgba(56, 189, 248, 0.12)' : '#070A11', textAlign: 'left', cursor: 'pointer' }}
+                    >
+                      <div style={{ fontSize: '10px', color: '#38BDF8', fontWeight: 800, marginBottom: '4px' }}>STEP 03</div>
+                      <div style={{ fontWeight: 700, color: '#FFFFFF', fontSize: '12px' }}>{t.node3Title}</div>
+                      <div style={{ fontSize: '10px', color: '#94A3B8', marginTop: '4px' }}>{t.node3Sub}</div>
+                    </button>
+                  </div>
+
+                  {/* Node State Feedback */}
+                  <div style={{ padding: '14px 16px', borderRadius: '10px', backgroundColor: '#090E1A', border: '1px solid rgba(56, 189, 248, 0.25)', fontFamily: 'monospace', fontSize: '11px', color: '#E2E8F0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#10B981', display: 'inline-block' }} />
+                      <span>
+                        {activeHeroNode === 1 && 'Node 1 Active: Web intake form capturing customer budget & criteria in Luxembourg.'}
+                        {activeHeroNode === 2 && 'Node 2 Active: Edge AI extracted 4 parameters & calculated lead priority score (96/100).'}
+                        {activeHeroNode === 3 && 'Node 3 Active: Record pushed to Notion database & automated calendar tour scheduled.'}
+                      </span>
+                    </div>
+                    <span style={{ color: '#64748B' }}>18ms</span>
                   </div>
                 </div>
               )}
 
-              {heroTab === 'payload' && (
-                <div style={{ color: '#CBD5E1', fontSize: '11px', lineHeight: '1.6' }}>
+              {heroTab === 'json' && (
+                <div style={{ fontFamily: 'monospace', fontSize: '11px', lineHeight: '1.6', color: '#CBD5E1', backgroundColor: '#090E1A', padding: '16px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.08)' }}>
                   <pre style={{ margin: 0 }}>{`{
   "client": "Jean-Luc Moreau",
-  "country": "LU",
+  "location": "Luxembourg_Kirchberg",
   "intent": "property_rental",
-  "budget_monthly_eur": 1850,
-  "zone": "Luxembourg_Kirchberg",
-  "qualification_score": 0.96,
-  "auto_action": "dispatch_viewing_cal_link"
+  "budget_eur": 1850,
+  "scoring": { "confidence": 0.98, "priority": "HIGH" },
+  "action_chain": ["notion_crm_write", "whatsapp_api_dispatch"]
 }`}</pre>
                 </div>
               )}
 
-              {heroTab === 'dispatch' && (
-                <div style={{ color: '#94A3B8', fontSize: '11px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <div style={{ padding: '8px 12px', borderRadius: '6px', backgroundColor: '#0B0F19', border: '1px solid #1E293B', color: '#10B981' }}>
-                    ➔ Notion Database: Row inserted with tag [Priority Qualified Lead]
+              {heroTab === 'crm' && (
+                <div style={{ fontFamily: 'monospace', fontSize: '11px', color: '#94A3B8', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <div style={{ padding: '10px 14px', borderRadius: '8px', backgroundColor: '#090E1A', border: '1px solid rgba(255,255,255,0.08)', color: '#10B981', display: 'flex', justifyContent: 'space-between' }}>
+                    <span>➔ Notion CRM: Record #4912 [Priority Qualified]</span>
+                    <span>CREATED</span>
                   </div>
-                  <div style={{ padding: '8px 12px', borderRadius: '6px', backgroundColor: '#0B0F19', border: '1px solid #1E293B', color: '#38BDF8' }}>
-                    ➔ Cal.com: Slot reserved for Tuesday 15:30
-                  </div>
-                  <div style={{ padding: '8px 12px', borderRadius: '6px', backgroundColor: '#0B0F19', border: '1px solid #1E293B', color: '#F59E0B' }}>
-                    ➔ Mobile Push: Alert dispatched to lead agent in 0.8s
+                  <div style={{ padding: '10px 14px', borderRadius: '8px', backgroundColor: '#090E1A', border: '1px solid rgba(255,255,255,0.08)', color: '#38BDF8', display: 'flex', justifyContent: 'space-between' }}>
+                    <span>➔ Cal.com: Tuesday 15:30 Viewing Slot Locked</span>
+                    <span>CONFIRMED</span>
                   </div>
                 </div>
               )}
@@ -463,8 +645,8 @@ export default function AIAndesStudioLanding() {
         </div>
       </section>
 
-      {/* ─── ROOMIX.AI STYLE NATURAL LANGUAGE SIMULATOR WITH PRESETS ─── */}
-      <section id="simulator" style={{ padding: '80px 24px', borderBottom: '1px solid #1E293B', backgroundColor: '#080C14' }}>
+      {/* ─── ROOMIX-STYLE NATURAL LANGUAGE SIMULATOR WITH PRESETS ─── */}
+      <section id="simulator" style={{ padding: '80px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', backgroundColor: '#070A12' }}>
         <div style={{ maxWidth: '960px', margin: '0 auto', textAlign: 'center' }}>
           
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '11px', fontFamily: 'monospace', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>
@@ -474,39 +656,39 @@ export default function AIAndesStudioLanding() {
           <h2 style={{ fontSize: '28px', fontWeight: 800, color: '#FFFFFF', marginBottom: '8px' }}>{t.nlTitle}</h2>
           <p style={{ fontSize: '14px', color: '#94A3B8', marginBottom: '24px' }}>{t.nlDesc}</p>
 
-          {/* Quick Presets Pills */}
+          {/* Quick Presets Buttons */}
           <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '8px', marginBottom: '20px', fontFamily: 'monospace', fontSize: '11px' }}>
             <button 
               type="button" 
               onClick={() => loadPreset('re')}
-              style={{ padding: '6px 12px', borderRadius: '9999px', backgroundColor: '#0F172A', border: '1px solid #334155', color: '#E2E8F0', cursor: 'pointer' }}
+              style={{ padding: '7px 14px', borderRadius: '9999px', backgroundColor: '#0B1120', border: '1px solid rgba(56, 189, 248, 0.3)', color: '#E2E8F0', cursor: 'pointer' }}
             >
               {t.preset1}
             </button>
             <button 
               type="button" 
               onClick={() => loadPreset('clinic')}
-              style={{ padding: '6px 12px', borderRadius: '9999px', backgroundColor: '#0F172A', border: '1px solid #334155', color: '#E2E8F0', cursor: 'pointer' }}
+              style={{ padding: '7px 14px', borderRadius: '9999px', backgroundColor: '#0B1120', border: '1px solid rgba(56, 189, 248, 0.3)', color: '#E2E8F0', cursor: 'pointer' }}
             >
               {t.preset2}
             </button>
             <button 
               type="button" 
               onClick={() => loadPreset('legal')}
-              style={{ padding: '6px 12px', borderRadius: '9999px', backgroundColor: '#0F172A', border: '1px solid #334155', color: '#E2E8F0', cursor: 'pointer' }}
+              style={{ padding: '7px 14px', borderRadius: '9999px', backgroundColor: '#0B1120', border: '1px solid rgba(56, 189, 248, 0.3)', color: '#E2E8F0', cursor: 'pointer' }}
             >
               {t.preset3}
             </button>
           </div>
 
           {/* Simulator Bar Card */}
-          <div style={{ padding: '24px', borderRadius: '18px', backgroundColor: '#0B0F19', border: '1px solid #1E293B', textAlign: 'left', boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }}>
+          <div style={{ padding: '24px', borderRadius: '20px', backgroundColor: '#0B101D', border: '1px solid rgba(255, 255, 255, 0.1)', textAlign: 'left', boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
               <textarea
                 rows={2}
                 value={nlQuery}
                 onChange={(e) => setNlQuery(e.target.value)}
-                style={{ width: '100%', backgroundColor: '#070A11', border: '1px solid #334155', borderRadius: '10px', padding: '14px', color: '#FFFFFF', fontSize: '13px', fontFamily: 'monospace', outline: 'none', resize: 'none' }}
+                style={{ width: '100%', backgroundColor: '#06080E', border: '1px solid #334155', borderRadius: '10px', padding: '14px', color: '#FFFFFF', fontSize: '13px', fontFamily: 'monospace', outline: 'none', resize: 'none' }}
               />
 
               <button
@@ -519,9 +701,9 @@ export default function AIAndesStudioLanding() {
               </button>
 
               {nlOutput && (
-                <div style={{ marginTop: '10px', padding: '16px', borderRadius: '10px', backgroundColor: '#070A11', border: '1px solid rgba(56, 189, 248, 0.4)', fontFamily: 'monospace', fontSize: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <div style={{ marginTop: '10px', padding: '16px', borderRadius: '10px', backgroundColor: '#06080E', border: '1px solid rgba(56, 189, 248, 0.4)', fontFamily: 'monospace', fontSize: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span style={{ color: '#10B981', fontWeight: 800 }}>✔ Structured Parameter Extraction (Score: {nlOutput.score}%)</span>
+                    <span style={{ color: '#10B981', fontWeight: 800 }}>✔ Parameter Extraction Verified (Confidence: {nlOutput.score}%)</span>
                     <span style={{ fontSize: '10px', color: '#94A3B8' }}>Latency: 1.1s</span>
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '8px', color: '#E2E8F0', padding: '8px 0' }}>
@@ -529,7 +711,7 @@ export default function AIAndesStudioLanding() {
                     <div>• Budget: <span style={{ color: '#38BDF8' }}>{nlOutput.budget}</span></div>
                     <div>• Target Zone: <span style={{ color: '#38BDF8' }}>{nlOutput.location}</span></div>
                   </div>
-                  <div style={{ color: '#10B981', fontSize: '11px', paddingTop: '6px', borderTop: '1px solid #1E293B' }}>➔ {nlOutput.status}</div>
+                  <div style={{ color: '#10B981', fontSize: '11px', paddingTop: '6px', borderTop: '1px solid #1E293B' }}>➔ {nlOutput.action}</div>
                 </div>
               )}
             </div>
@@ -538,8 +720,8 @@ export default function AIAndesStudioLanding() {
         </div>
       </section>
 
-      {/* ─── HEYFARDO.COM STYLE 4-PHASE FRAMEWORK WITH PROGRESS BARS ─── */}
-      <section id="framework" style={{ padding: '80px 24px', borderBottom: '1px solid #1E293B' }}>
+      {/* ─── HEYFARDO-STYLE 4-PHASE METHODOLOGY WITH PROGRESS METERS ─── */}
+      <section id="framework" style={{ padding: '80px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
         <div style={{ maxWidth: '1152px', margin: '0 auto' }}>
           
           <div style={{ maxWidth: '640px', marginBottom: '48px' }}>
@@ -551,7 +733,7 @@ export default function AIAndesStudioLanding() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '20px' }}>
             
             {/* Phase 1 */}
-            <div style={{ padding: '28px', borderRadius: '18px', backgroundColor: '#0B0F19', border: '1px solid #1E293B', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div style={{ padding: '28px', borderRadius: '18px', backgroundColor: '#0B101D', border: '1px solid rgba(255, 255, 255, 0.08)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                   <span style={{ fontSize: '11px', fontFamily: 'monospace', color: '#38BDF8', fontWeight: 800 }}>PHASE 01</span>
@@ -572,7 +754,7 @@ export default function AIAndesStudioLanding() {
             </div>
 
             {/* Phase 2 */}
-            <div style={{ padding: '28px', borderRadius: '18px', backgroundColor: '#0B0F19', border: '1px solid #1E293B', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div style={{ padding: '28px', borderRadius: '18px', backgroundColor: '#0B101D', border: '1px solid rgba(255, 255, 255, 0.08)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                   <span style={{ fontSize: '11px', fontFamily: 'monospace', color: '#38BDF8', fontWeight: 800 }}>PHASE 02</span>
@@ -593,7 +775,7 @@ export default function AIAndesStudioLanding() {
             </div>
 
             {/* Phase 3 */}
-            <div style={{ padding: '28px', borderRadius: '18px', backgroundColor: '#0B0F19', border: '1px solid #1E293B', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div style={{ padding: '28px', borderRadius: '18px', backgroundColor: '#0B101D', border: '1px solid rgba(255, 255, 255, 0.08)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                   <span style={{ fontSize: '11px', fontFamily: 'monospace', color: '#38BDF8', fontWeight: 800 }}>PHASE 03</span>
@@ -614,7 +796,7 @@ export default function AIAndesStudioLanding() {
             </div>
 
             {/* Phase 4 */}
-            <div style={{ padding: '28px', borderRadius: '18px', backgroundColor: '#0B0F19', border: '1px solid #1E293B', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div style={{ padding: '28px', borderRadius: '18px', backgroundColor: '#0B101D', border: '1px solid rgba(255, 255, 255, 0.08)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                   <span style={{ fontSize: '11px', fontFamily: 'monospace', color: '#10B981', fontWeight: 800 }}>PHASE 04</span>
@@ -638,8 +820,273 @@ export default function AIAndesStudioLanding() {
         </div>
       </section>
 
-      {/* ─── CASE STUDIES: BEFORE VS AFTER ─── */}
-      <section id="outcomes" style={{ padding: '80px 24px', borderBottom: '1px solid #1E293B' }}>
+      {/* ─── INTERACTIVE SANDBOXES (REAL ESTATE & CLINIC) ─── */}
+      <section id="sandboxes" style={{ padding: '80px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', backgroundColor: '#070A12' }}>
+        <div style={{ maxWidth: '1152px', margin: '0 auto' }}>
+          
+          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '40px', gap: '20px' }}>
+            <div style={{ maxWidth: '576px' }}>
+              <div style={{ fontSize: '12px', fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '1px', color: '#38BDF8', marginBottom: '8px' }}>{t.sandBadge}</div>
+              <h2 style={{ fontSize: '32px', fontWeight: 800, color: '#FFFFFF', marginBottom: '8px' }}>{t.sandTitle}</h2>
+              <p style={{ fontSize: '14px', color: '#94A3B8' }}>{t.sandDesc}</p>
+            </div>
+
+            <div style={{ display: 'flex', padding: '4px', borderRadius: '12px', backgroundColor: '#0B1120', border: '1px solid rgba(255,255,255,0.08)', fontSize: '12px', fontFamily: 'monospace' }}>
+              <button 
+                type="button" 
+                onClick={() => setSandboxTab('re')}
+                style={{ padding: '8px 16px', borderRadius: '8px', border: 'none', cursor: 'pointer', backgroundColor: sandboxTab === 're' ? '#38BDF8' : 'transparent', color: sandboxTab === 're' ? '#06080E' : '#94A3B8', fontWeight: sandboxTab === 're' ? 800 : 500, display: 'flex', alignItems: 'center', gap: '8px' }}
+              >
+                <Building2 width="14" height="14" />
+                {t.demo1Tab}
+              </button>
+              <button 
+                type="button" 
+                onClick={() => setSandboxTab('clinic')}
+                style={{ padding: '8px 16px', borderRadius: '8px', border: 'none', cursor: 'pointer', backgroundColor: sandboxTab === 'clinic' ? '#38BDF8' : 'transparent', color: sandboxTab === 'clinic' ? '#06080E' : '#94A3B8', fontWeight: sandboxTab === 'clinic' ? 800 : 500, display: 'flex', alignItems: 'center', gap: '8px' }}
+              >
+                <Stethoscope width="14" height="14" />
+                {t.demo2Tab}
+              </button>
+            </div>
+          </div>
+
+          <div style={{ padding: '36px', borderRadius: '24px', backgroundColor: '#0B101D', border: '1px solid rgba(255, 255, 255, 0.1)', boxShadow: '0 24px 48px rgba(0,0,0,0.5)' }}>
+            
+            {sandboxTab === 're' ? (
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '36px' }}>
+                
+                {/* Form Column */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', fontFamily: 'monospace', fontSize: '12px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.08)', fontWeight: 800, color: '#FFFFFF' }}>
+                    <span style={{ color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '1px' }}>Inbound Property Intake</span>
+                    <span style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '4px', backgroundColor: '#070A11', color: '#94A3B8' }}>Live Sandbox</span>
+                  </div>
+
+                  <div>
+                    <label style={{ color: '#94A3B8', display: 'block', marginBottom: '6px' }}>{t.reNameLabel}</label>
+                    <input 
+                      type="text" 
+                      value={reForm.name} 
+                      onChange={(e) => setReForm({...reForm, name: e.target.value})}
+                      style={{ width: '100%', backgroundColor: '#06080E', border: '1px solid #334155', borderRadius: '8px', padding: '12px', color: '#FFFFFF', outline: 'none' }}
+                    />
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                    <div>
+                      <label style={{ color: '#94A3B8', display: 'block', marginBottom: '6px' }}>{t.reIntentLabel}</label>
+                      <select 
+                        value={reForm.intent} 
+                        onChange={(e) => setReForm({...reForm, intent: e.target.value})}
+                        style={{ width: '100%', backgroundColor: '#06080E', border: '1px solid #334155', borderRadius: '8px', padding: '12px', color: '#FFFFFF', outline: 'none' }}
+                      >
+                        <option value="rent">{t.reRent}</option>
+                        <option value="buy">{t.reBuy}</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label style={{ color: '#94A3B8', display: 'block', marginBottom: '6px' }}>{t.reBudgetLabel}</label>
+                      <input 
+                        type="text" 
+                        value={reForm.budget} 
+                        onChange={(e) => setReForm({...reForm, budget: e.target.value})}
+                        style={{ width: '100%', backgroundColor: '#06080E', border: '1px solid #334155', borderRadius: '8px', padding: '12px', color: '#FFFFFF', outline: 'none' }}
+                      />
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                    <div>
+                      <label style={{ color: '#94A3B8', display: 'block', marginBottom: '6px' }}>{t.reRoomsLabel}</label>
+                      <select 
+                        value={reForm.rooms} 
+                        onChange={(e) => setReForm({...reForm, rooms: e.target.value})}
+                        style={{ width: '100%', backgroundColor: '#06080E', border: '1px solid #334155', borderRadius: '8px', padding: '12px', color: '#FFFFFF', outline: 'none' }}
+                      >
+                        <option value="1">1 Bed</option>
+                        <option value="2">2 Beds</option>
+                        <option value="3+">3+ Beds</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label style={{ color: '#94A3B8', display: 'block', marginBottom: '6px' }}>{t.reZoneLabel}</label>
+                      <input 
+                        type="text" 
+                        value={reForm.location} 
+                        onChange={(e) => setReForm({...reForm, location: e.target.value})}
+                        style={{ width: '100%', backgroundColor: '#06080E', border: '1px solid #334155', borderRadius: '8px', padding: '12px', color: '#FFFFFF', outline: 'none' }}
+                      />
+                    </div>
+                  </div>
+
+                  <button 
+                    type="button" 
+                    onClick={() => setReStep(2)}
+                    style={{ width: '100%', padding: '16px', borderRadius: '12px', backgroundColor: '#38BDF8', color: '#06080E', border: 'none', fontWeight: 800, fontSize: '13px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginTop: '8px', boxShadow: '0 0 20px rgba(56,189,248,0.3)' }}
+                  >
+                    <Zap width="16" height="16" />
+                    {t.reRunBtn}
+                  </button>
+                </div>
+
+                {/* Live Console Output */}
+                <div style={{ padding: '24px', borderRadius: '16px', backgroundColor: '#06080E', border: '1px solid rgba(255,255,255,0.08)', fontFamily: 'monospace', fontSize: '12px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.08)', fontWeight: 800 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#FFFFFF' }}>
+                      <Terminal width="16" height="16" color="#38BDF8" />
+                      Workflow Engine State
+                    </div>
+                    <span style={{ fontSize: '10px', padding: '3px 8px', borderRadius: '4px', backgroundColor: 'rgba(16, 185, 129, 0.1)', color: '#10B981', border: '1px solid rgba(16, 185, 129, 0.3)' }}>
+                      Active
+                    </span>
+                  </div>
+
+                  {reStep === 2 ? (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                      <div style={{ padding: '18px', borderRadius: '12px', backgroundColor: '#0B1120', border: '1px solid rgba(56, 189, 248, 0.3)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: '#38BDF8', fontWeight: 800 }}>
+                          <span>{t.reResultTitle}</span>
+                          <span style={{ fontSize: '10px', color: '#10B981' }}>{t.reResultScore}</span>
+                        </div>
+                        <p style={{ color: '#E2E8F0', lineHeight: 1.6, fontSize: '12px' }}>
+                          {t.reResultText(reForm.name, reForm.rooms, reForm.intent, reForm.location, reForm.budget)}
+                        </p>
+                      </div>
+
+                      <div style={{ padding: '12px 16px', borderRadius: '8px', backgroundColor: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(255,255,255,0.08)', fontSize: '11px', color: '#94A3B8', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                        <div>➔ Notion Database: Row created with tag [Urgent Followup]</div>
+                        <div>➔ Calendar Link: Proposed viewing timeslot generated</div>
+                        <div>➔ Agent Alert: Push notification sent to mobile</div>
+                      </div>
+
+                      <button 
+                        type="button" 
+                        onClick={() => setReStep(1)}
+                        style={{ width: '100%', padding: '12px', borderRadius: '8px', backgroundColor: '#1E293B', color: '#E2E8F0', border: 'none', fontSize: '12px', cursor: 'pointer', fontWeight: 600 }}
+                      >
+                        {t.reResetBtn}
+                      </button>
+                    </div>
+                  ) : (
+                    <div style={{ padding: '56px 0', textAlign: 'center', color: '#64748B', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
+                      <Workflow width="36" height="36" stroke="#475569" />
+                      <p>Click &quot;{t.reRunBtn}&quot; to test the live classification stream.</p>
+                    </div>
+                  )}
+                </div>
+
+              </div>
+            ) : (
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '36px' }}>
+                
+                {/* Clinic Form Column */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', fontFamily: 'monospace', fontSize: '12px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.08)', fontWeight: 800, color: '#FFFFFF' }}>
+                    <span style={{ color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '1px' }}>Patient Intake Portal</span>
+                    <span style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '4px', backgroundColor: '#070A11', color: '#94A3B8' }}>GDPR Triage</span>
+                  </div>
+
+                  <div>
+                    <label style={{ color: '#94A3B8', display: 'block', marginBottom: '6px' }}>{t.clSrvLabel}</label>
+                    <select 
+                      value={clinicForm.service} 
+                      onChange={(e) => setClinicForm({...clinicForm, service: e.target.value})}
+                      style={{ width: '100%', backgroundColor: '#06080E', border: '1px solid #334155', borderRadius: '8px', padding: '12px', color: '#FFFFFF', outline: 'none' }}
+                    >
+                      <option value="Nutritional & Metabolic Health">{t.clSrv1}</option>
+                      <option value="Dental Aesthetics & Implantology">{t.clSrv2}</option>
+                      <option value="Physiotherapy & Rehabilitation">{t.clSrv3}</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label style={{ color: '#94A3B8', display: 'block', marginBottom: '6px' }}>{t.clSymLabel}</label>
+                    <input 
+                      type="text" 
+                      value={clinicForm.symptom} 
+                      onChange={(e) => setClinicForm({...clinicForm, symptom: e.target.value})}
+                      style={{ width: '100%', backgroundColor: '#06080E', border: '1px solid #334155', borderRadius: '8px', padding: '12px', color: '#FFFFFF', outline: 'none' }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ color: '#94A3B8', display: 'block', marginBottom: '6px' }}>{t.clTimeLabel}</label>
+                    <select 
+                      value={clinicForm.timeSlot} 
+                      onChange={(e) => setClinicForm({...clinicForm, timeSlot: e.target.value})}
+                      style={{ width: '100%', backgroundColor: '#06080E', border: '1px solid #334155', borderRadius: '8px', padding: '12px', color: '#FFFFFF', outline: 'none' }}
+                    >
+                      <option value="Thursday 10:00 (Morning)">{t.clTime1}</option>
+                      <option value="Thursday 15:30 (Afternoon)">{t.clTime2}</option>
+                    </select>
+                  </div>
+
+                  <button 
+                    type="button" 
+                    onClick={() => setClinicStep(2)}
+                    style={{ width: '100%', padding: '16px', borderRadius: '12px', backgroundColor: '#38BDF8', color: '#06080E', border: 'none', fontWeight: 800, fontSize: '13px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginTop: '8px', boxShadow: '0 0 20px rgba(56,189,248,0.3)' }}
+                  >
+                    <UserCheck width="16" height="16" />
+                    {t.clRunBtn}
+                  </button>
+                </div>
+
+                {/* Clinic Console Output */}
+                <div style={{ padding: '24px', borderRadius: '16px', backgroundColor: '#06080E', border: '1px solid rgba(255,255,255,0.08)', fontFamily: 'monospace', fontSize: '12px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.08)', fontWeight: 800 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#FFFFFF' }}>
+                      <Terminal width="16" height="16" color="#38BDF8" />
+                      Clinical Triage Stream
+                    </div>
+                    <span style={{ fontSize: '10px', padding: '3px 8px', borderRadius: '4px', backgroundColor: 'rgba(56, 189, 248, 0.1)', color: '#38BDF8', border: '1px solid rgba(56, 189, 248, 0.3)' }}>
+                      Sync: Cal.com API
+                    </span>
+                  </div>
+
+                  {clinicStep === 2 ? (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                      <div style={{ padding: '18px', borderRadius: '12px', backgroundColor: '#0B1120', border: '1px solid rgba(56, 189, 248, 0.3)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: '#38BDF8', fontWeight: 800 }}>
+                          <span>{t.clResultTitle}</span>
+                          <span style={{ fontSize: '10px', color: '#38BDF8' }}>{t.clResultTag}</span>
+                        </div>
+                        <p style={{ color: '#E2E8F0', lineHeight: 1.6, fontSize: '12px' }}>
+                          {t.clResultText(clinicForm.service, clinicForm.symptom, clinicForm.timeSlot)}
+                        </p>
+                      </div>
+
+                      <div style={{ padding: '12px 16px', borderRadius: '8px', backgroundColor: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(255,255,255,0.08)', fontSize: '11px', color: '#94A3B8', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                        <div>➔ Calendar Reservation: Slot locked for 45 mins</div>
+                        <div>➔ Automated Reminder: 24h WhatsApp notification queued</div>
+                        <div>➔ Staff Dashboard: Intake notes logged without duplicate data</div>
+                      </div>
+
+                      <button 
+                        type="button" 
+                        onClick={() => setClinicStep(1)}
+                        style={{ width: '100%', padding: '12px', borderRadius: '8px', backgroundColor: '#1E293B', color: '#E2E8F0', border: 'none', fontSize: '12px', cursor: 'pointer', fontWeight: 600 }}
+                      >
+                        {t.clResetBtn}
+                      </button>
+                    </div>
+                  ) : (
+                    <div style={{ padding: '56px 0', textAlign: 'center', color: '#64748B', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
+                      <Workflow width="36" height="36" stroke="#475569" />
+                      <p>Click &quot;{t.clRunBtn}&quot; to test the live clinical booking stream.</p>
+                    </div>
+                  )}
+                </div>
+
+              </div>
+            )}
+
+          </div>
+        </div>
+      </section>
+
+      {/* ─── MEASURABLE OUTCOMES (BEFORE VS AFTER) ─── */}
+      <section id="outcomes" style={{ padding: '80px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
         <div style={{ maxWidth: '1152px', margin: '0 auto' }}>
           
           <div style={{ maxWidth: '600px', marginBottom: '48px' }}>
@@ -650,7 +1097,7 @@ export default function AIAndesStudioLanding() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
             
             {/* Case 1 */}
-            <div style={{ padding: '32px', borderRadius: '20px', backgroundColor: '#0B0F19', border: '1px solid #1E293B', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div style={{ padding: '32px', borderRadius: '20px', backgroundColor: '#0B101D', border: '1px solid rgba(255, 255, 255, 0.08)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
                   <h3 style={{ fontSize: '16px', fontWeight: 700, color: '#FFFFFF' }}>{t.case1Title}</h3>
@@ -672,7 +1119,7 @@ export default function AIAndesStudioLanding() {
             </div>
 
             {/* Case 2 */}
-            <div style={{ padding: '32px', borderRadius: '20px', backgroundColor: '#0B0F19', border: '1px solid #1E293B', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div style={{ padding: '32px', borderRadius: '20px', backgroundColor: '#0B101D', border: '1px solid rgba(255, 255, 255, 0.08)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
                   <h3 style={{ fontSize: '16px', fontWeight: 700, color: '#FFFFFF' }}>{t.case2Title}</h3>
@@ -698,8 +1145,8 @@ export default function AIAndesStudioLanding() {
       </section>
 
       {/* ─── ROI CALCULATOR ─── */}
-      <section id="roi" style={{ padding: '80px 24px', borderBottom: '1px solid #1E293B' }}>
-        <div style={{ maxWidth: '800px', margin: '0 auto', padding: '40px', borderRadius: '24px', backgroundColor: '#0B0F19', border: '1px solid #1E293B', boxShadow: '0 24px 48px rgba(0,0,0,0.5)' }}>
+      <section id="roi" style={{ padding: '80px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto', padding: '40px', borderRadius: '24px', backgroundColor: '#0B101D', border: '1px solid rgba(255, 255, 255, 0.1)', boxShadow: '0 24px 48px rgba(0,0,0,0.5)' }}>
           <div style={{ textAlign: 'center', maxWidth: '600px', margin: '0 auto 36px auto' }}>
             <div style={{ fontSize: '12px', fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '1px', color: '#38BDF8', marginBottom: '8px' }}>{t.calcBadge}</div>
             <h2 style={{ fontSize: '28px', fontWeight: 800, color: '#FFFFFF', marginBottom: '8px' }}>{t.calcTitle}</h2>
@@ -709,8 +1156,8 @@ export default function AIAndesStudioLanding() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '28px', maxWidth: '560px', margin: '0 auto' }}>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '12px', fontFamily: 'monospace', color: '#CBD5E1', marginBottom: '10px' }}>
-                <span>{t.calcSliderLabel}</span>
-                <span style={{ color: '#38BDF8', fontWeight: 800, fontSize: '15px', padding: '4px 12px', backgroundColor: '#070A11', borderRadius: '6px', border: '1px solid #1E293B' }}>{weeklyVolume}</span>
+                <span>{t.calcLabel}</span>
+                <span style={{ color: '#38BDF8', fontWeight: 800, fontSize: '15px', padding: '4px 12px', backgroundColor: '#06080E', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.1)' }}>{weeklyVolume}</span>
               </div>
               <input 
                 type="range" 
@@ -719,7 +1166,7 @@ export default function AIAndesStudioLanding() {
                 step="5"
                 value={weeklyVolume}
                 onChange={(e) => setWeeklyVolume(Number(e.target.value))}
-                style={{ width: '100%', height: '8px', backgroundColor: '#070A11', borderRadius: '8px', outline: 'none', cursor: 'pointer', accentColor: '#38BDF8' }}
+                style={{ width: '100%', height: '8px', backgroundColor: '#06080E', borderRadius: '8px', outline: 'none', cursor: 'pointer', accentColor: '#38BDF8' }}
               />
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', fontFamily: 'monospace', color: '#64748B', marginTop: '8px' }}>
                 <span>10 / wk</span>
@@ -728,12 +1175,12 @@ export default function AIAndesStudioLanding() {
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', paddingTop: '20px', borderTop: '1px solid #1E293B', fontFamily: 'monospace', textAlign: 'center' }}>
-              <div style={{ padding: '20px', borderRadius: '14px', backgroundColor: '#070A11', border: '1px solid #1E293B' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', paddingTop: '20px', borderTop: '1px solid rgba(255,255,255,0.08)', fontFamily: 'monospace', textAlign: 'center' }}>
+              <div style={{ padding: '20px', borderRadius: '14px', backgroundColor: '#06080E', border: '1px solid rgba(255,255,255,0.08)' }}>
                 <div style={{ fontSize: '11px', color: '#94A3B8', marginBottom: '6px' }}>{t.calcHours}</div>
-                <div style={{ fontSize: '24px', fontWeight: 800, color: '#38BDF8' }}>~{hoursSaved} <span style={{ fontSize: '12px', color: '#64748B', fontWeight: 400 }}>hrs / month</span></div>
+                <div style={{ fontSize: '24px', fontWeight: 800, color: '#38BDF8' }}>~{hoursSaved} <span style={{ fontSize: '12px', color: '#64748B', fontWeight: 400 }}>hrs / mo</span></div>
               </div>
-              <div style={{ padding: '20px', borderRadius: '14px', backgroundColor: '#070A11', border: '1px solid #1E293B' }}>
+              <div style={{ padding: '20px', borderRadius: '14px', backgroundColor: '#06080E', border: '1px solid rgba(255,255,255,0.08)' }}>
                 <div style={{ fontSize: '11px', color: '#94A3B8', marginBottom: '6px' }}>{t.calcVal}</div>
                 <div style={{ fontSize: '24px', fontWeight: 800, color: '#10B981' }}>~€{eurosSaved.toLocaleString()} <span style={{ fontSize: '12px', color: '#64748B', fontWeight: 400 }}>/ mo</span></div>
               </div>
@@ -743,18 +1190,18 @@ export default function AIAndesStudioLanding() {
         </div>
       </section>
 
-      {/* ─── AUDIT INTAKE FORM ─── */}
+      {/* ─── AUDIT CONTACT FORM ─── */}
       <section id="audit" style={{ padding: '80px 24px' }}>
-        <div style={{ maxWidth: '680px', margin: '0 auto', padding: '40px', borderRadius: '24px', backgroundColor: '#0B0F19', border: '1px solid #1E293B', boxShadow: '0 24px 48px rgba(0,0,0,0.5)' }}>
+        <div style={{ maxWidth: '680px', margin: '0 auto', padding: '40px', borderRadius: '24px', backgroundColor: '#0B101D', border: '1px solid rgba(255, 255, 255, 0.1)', boxShadow: '0 24px 48px rgba(0,0,0,0.5)' }}>
           
           <div style={{ textAlign: 'center', marginBottom: '36px' }}>
             <div style={{ fontSize: '12px', fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '1px', color: '#38BDF8', marginBottom: '8px' }}>{t.auditBadge}</div>
             <h2 style={{ fontSize: '28px', fontWeight: 800, color: '#FFFFFF', marginBottom: '8px' }}>{t.auditTitle}</h2>
-            <p style={{ fontSize: '13px', color: '#94A3B8', lineHeight: '1.6' }}>{t.auditDesc}</p>
+            <p style={{ fontSize: '13px', color: '#94A3B8', lineHeight: 1.6 }}>{t.auditDesc}</p>
           </div>
 
           {contactDone ? (
-            <div style={{ padding: '32px', borderRadius: '16px', backgroundColor: '#070A11', border: '1px solid rgba(16, 185, 129, 0.4)', textAlign: 'center', fontFamily: 'monospace' }}>
+            <div style={{ padding: '32px', borderRadius: '16px', backgroundColor: '#06080E', border: '1px solid rgba(16, 185, 129, 0.4)', textAlign: 'center', fontFamily: 'monospace' }}>
               <CheckCircle2 width="36" height="36" color="#10B981" style={{ margin: '0 auto 12px auto' }} />
               <h3 style={{ fontSize: '18px', fontWeight: 800, color: '#FFFFFF', marginBottom: '6px' }}>{t.auditSentTitle}</h3>
               <p style={{ fontSize: '12px', color: '#94A3B8', maxWidth: '420px', margin: '0 auto' }}>{t.auditSentDesc}</p>
@@ -771,7 +1218,7 @@ export default function AIAndesStudioLanding() {
                     placeholder="e.g. Jean-Luc Moreau"
                     value={contactState.name}
                     onChange={(e) => setContactState({...contactState, name: e.target.value})}
-                    style={{ width: '100%', backgroundColor: '#070A11', border: '1px solid #334155', borderRadius: '8px', padding: '12px 14px', color: '#FFFFFF', outline: 'none' }}
+                    style={{ width: '100%', backgroundColor: '#06080E', border: '1px solid #334155', borderRadius: '8px', padding: '12px 14px', color: '#FFFFFF', outline: 'none' }}
                   />
                 </div>
                 <div>
@@ -782,7 +1229,7 @@ export default function AIAndesStudioLanding() {
                     placeholder="jeanluc@firm.lu"
                     value={contactState.email}
                     onChange={(e) => setContactState({...contactState, email: e.target.value})}
-                    style={{ width: '100%', backgroundColor: '#070A11', border: '1px solid #334155', borderRadius: '8px', padding: '12px 14px', color: '#FFFFFF', outline: 'none' }}
+                    style={{ width: '100%', backgroundColor: '#06080E', border: '1px solid #334155', borderRadius: '8px', padding: '12px 14px', color: '#FFFFFF', outline: 'none' }}
                   />
                 </div>
               </div>
@@ -795,7 +1242,7 @@ export default function AIAndesStudioLanding() {
                     placeholder="e.g. Moreau Real Estate SARL"
                     value={contactState.company}
                     onChange={(e) => setContactState({...contactState, company: e.target.value})}
-                    style={{ width: '100%', backgroundColor: '#070A11', border: '1px solid #334155', borderRadius: '8px', padding: '12px 14px', color: '#FFFFFF', outline: 'none' }}
+                    style={{ width: '100%', backgroundColor: '#06080E', border: '1px solid #334155', borderRadius: '8px', padding: '12px 14px', color: '#FFFFFF', outline: 'none' }}
                   />
                 </div>
                 <div>
@@ -805,7 +1252,7 @@ export default function AIAndesStudioLanding() {
                     placeholder="https://moreau.lu"
                     value={contactState.website}
                     onChange={(e) => setContactState({...contactState, website: e.target.value})}
-                    style={{ width: '100%', backgroundColor: '#070A11', border: '1px solid #334155', borderRadius: '8px', padding: '12px 14px', color: '#FFFFFF', outline: 'none' }}
+                    style={{ width: '100%', backgroundColor: '#06080E', border: '1px solid #334155', borderRadius: '8px', padding: '12px 14px', color: '#FFFFFF', outline: 'none' }}
                   />
                 </div>
               </div>
@@ -817,7 +1264,7 @@ export default function AIAndesStudioLanding() {
                   placeholder="e.g. Inquiries arrive manually via email and WhatsApp. We spend too much time sorting budgets and manually booking appointments."
                   value={contactState.goal}
                   onChange={(e) => setContactState({...contactState, goal: e.target.value})}
-                  style={{ width: '100%', backgroundColor: '#070A11', border: '1px solid #334155', borderRadius: '8px', padding: '12px 14px', color: '#FFFFFF', outline: 'none' }}
+                  style={{ width: '100%', backgroundColor: '#06080E', border: '1px solid #334155', borderRadius: '8px', padding: '12px 14px', color: '#FFFFFF', outline: 'none' }}
                 />
               </div>
 
@@ -834,7 +1281,7 @@ export default function AIAndesStudioLanding() {
       </section>
 
       {/* ─── FOOTER ─── */}
-      <footer style={{ padding: '36px 24px', borderTop: '1px solid #1E293B', fontSize: '12px', fontFamily: 'monospace', color: '#64748B', backgroundColor: '#05070B' }}>
+      <footer style={{ padding: '36px 24px', borderTop: '1px solid rgba(255, 255, 255, 0.08)', fontSize: '12px', fontFamily: 'monospace', color: '#64748B', backgroundColor: '#05070E' }}>
         <div style={{ maxWidth: '1152px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '16px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <span style={{ fontWeight: 700, color: '#CBD5E1' }}>AI Andes Studio</span>
