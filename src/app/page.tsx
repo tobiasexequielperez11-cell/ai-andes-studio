@@ -33,7 +33,8 @@ import {
   Briefcase,
   Scale,
   HelpCircle,
-  Lock
+  Lock,
+  Loader2
 } from 'lucide-react';
 
 export default function AIAndesStudioLanding() {
@@ -50,7 +51,7 @@ export default function AIAndesStudioLanding() {
     intent: 'Property Rental · 2 Bedrooms',
     budget: '€1,900 / month',
     location: 'Luxembourg City (Kirchberg)',
-    action: 'Matched 3 verified properties · Instant viewing link dispatched via WhatsApp API'
+    action: 'Matched 3 verified properties · Instant tour link dispatched via WhatsApp API'
   });
 
   // Sandbox State
@@ -80,16 +81,18 @@ export default function AIAndesStudioLanding() {
   // Multi-Step Stepper Audit Form State
   const [auditStep, setAuditStep] = useState<number>(1);
   const [auditForm, setAuditForm] = useState({
-    industry: 'Real Estate & Property',
-    friction: 'Manual WhatsApp & Email inquiry sorting',
+    industry: '🏢 Real Estate & Property',
+    friction: 'Unorganized WhatsApp & Email inquiries',
     name: '',
     email: '',
     company: '',
     website: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [auditSent, setAuditSent] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
-  // FAQ Accordion State (Open question index)
+  // FAQ Accordion State
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   const t = {
@@ -226,8 +229,9 @@ export default function AIAndesStudioLanding() {
       btnNext: 'Continue to Next Step',
       btnBack: 'Back',
       btnFinalSubmit: 'Submit Free Audit Request',
+      btnSubmitting: 'Dispatching...',
       auditSentTitle: 'Audit Request Received',
-      auditSentDesc: 'We will inspect your business flow and deliver a 3-point actionable blueprint to your email shortly.',
+      auditSentDesc: 'We have received your details and will deliver a 3-point actionable blueprint to your email within 24 hours.',
 
       // FAQ Accordion Strings
       faqBadge: 'Clarity & FAQ',
@@ -376,8 +380,9 @@ export default function AIAndesStudioLanding() {
       btnNext: 'Continuar al Siguiente Paso',
       btnBack: 'Atrás',
       btnFinalSubmit: 'Enviar Solicitud de Auditoría',
+      btnSubmitting: 'Enviando...',
       auditSentTitle: 'Solicitud Recibida',
-      auditSentDesc: 'Analizaremos tu flujo y te enviaremos un diagnóstico práctico de 3 mejoras a tu correo.',
+      auditSentDesc: 'Analizaremos tu flujo y te enviaremos un diagnóstico práctico de 3 mejoras a tu correo dentro de las próximas 24 horas.',
 
       // FAQ Accordion Strings
       faqBadge: 'Claridad y Preguntas Frecuentes',
@@ -423,6 +428,32 @@ export default function AIAndesStudioLanding() {
         location: 'Zurich Financial District',
         action: 'Checklist created in Notion · Partner alerted with document brief'
       });
+    }
+  };
+
+  // Real Submission Handler to /api/audit
+  const handleAuditSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      const response = await fetch('/api/audit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(auditForm),
+      });
+
+      if (!response.ok) {
+        const errData = await response.json();
+        throw new Error(errData.error || 'Failed to submit audit request');
+      }
+
+      setAuditSent(true);
+    } catch (err: any) {
+      setSubmitError(err.message || 'Error sending request. Please try again.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -816,7 +847,7 @@ export default function AIAndesStudioLanding() {
         </div>
       </section>
 
-      {/* ─── NEW: MULTI-STEP STEPPER AUDIT FORM (NameThatUI Steps) ─── */}
+      {/* ─── MULTI-STEP STEPPER AUDIT FORM (REAL FETCH TO /api/audit) ─── */}
       <section id="audit" style={{ padding: '56px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
         <div style={{ maxWidth: '720px', margin: '0 auto', padding: '36px', borderRadius: '22px', backgroundColor: '#0B101D', border: '1px solid rgba(255, 255, 255, 0.08)', boxShadow: '0 24px 48px rgba(0,0,0,0.6)' }}>
           
@@ -826,7 +857,7 @@ export default function AIAndesStudioLanding() {
             <p style={{ fontSize: '13px', color: '#94A3B8' }}>{t.auditDesc}</p>
           </div>
 
-          {/* Stepper Progress Bar */}
+          {/* Stepper Progress Indicator */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', marginBottom: '28px', fontFamily: 'monospace', fontSize: '11px' }}>
             <div style={{ padding: '8px 12px', borderRadius: '8px', border: auditStep === 1 ? '1px solid #F59E0B' : '1px solid #1E293B', backgroundColor: auditStep >= 1 ? 'rgba(245, 158, 11, 0.1)' : '#070A11', color: auditStep >= 1 ? '#F59E0B' : '#64748B', textAlign: 'center', fontWeight: 700 }}>
               {t.step1Name}
@@ -847,6 +878,12 @@ export default function AIAndesStudioLanding() {
             </div>
           ) : (
             <div>
+              {submitError && (
+                <div style={{ padding: '10px 14px', borderRadius: '8px', backgroundColor: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.3)', color: '#EF4444', fontSize: '11px', fontFamily: 'monospace', marginBottom: '16px' }}>
+                  ⚠ {submitError}
+                </div>
+              )}
+
               {/* STEP 1: INDUSTRY */}
               {auditStep === 1 && (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', fontFamily: 'monospace', fontSize: '12px' }}>
@@ -910,9 +947,9 @@ export default function AIAndesStudioLanding() {
                 </div>
               )}
 
-              {/* STEP 3: CONTACT DETAILS & SUBMIT */}
+              {/* STEP 3: CONTACT DETAILS & REAL SUBMIT */}
               {auditStep === 3 && (
-                <form onSubmit={(e) => { e.preventDefault(); setAuditSent(true); }} style={{ display: 'flex', flexDirection: 'column', gap: '14px', fontSize: '12px', fontFamily: 'monospace' }}>
+                <form onSubmit={handleAuditSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px', fontSize: '12px', fontFamily: 'monospace' }}>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                     <input required type="text" placeholder="Your Name *" value={auditForm.name} onChange={(e) => setAuditForm({...auditForm, name: e.target.value})} style={{ width: '100%', backgroundColor: '#06080E', border: '1px solid #334155', borderRadius: '6px', padding: '10px 12px', color: '#FFFFFF', outline: 'none' }} />
                     <input required type="email" placeholder="Work Email *" value={auditForm.email} onChange={(e) => setAuditForm({...auditForm, email: e.target.value})} style={{ width: '100%', backgroundColor: '#06080E', border: '1px solid #334155', borderRadius: '6px', padding: '10px 12px', color: '#FFFFFF', outline: 'none' }} />
@@ -929,14 +966,29 @@ export default function AIAndesStudioLanding() {
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
                     <button
                       type="button"
+                      disabled={isSubmitting}
                       onClick={() => setAuditStep(2)}
                       style={{ padding: '10px 18px', borderRadius: '8px', backgroundColor: 'transparent', border: '1px solid #334155', color: '#94A3B8', cursor: 'pointer' }}
                     >
                       {t.btnBack}
                     </button>
-                    <button type="submit" className="btn-interaction" style={{ padding: '14px 28px', borderRadius: '10px', backgroundColor: '#F59E0B', color: '#06080E', border: 'none', fontWeight: 800, fontSize: '13px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <Send width="14" height="14" />
-                      {t.btnFinalSubmit}
+                    <button 
+                      type="submit" 
+                      disabled={isSubmitting}
+                      className="btn-interaction" 
+                      style={{ padding: '14px 28px', borderRadius: '10px', backgroundColor: '#F59E0B', color: '#06080E', border: 'none', fontWeight: 800, fontSize: '13px', cursor: isSubmitting ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', gap: '8px', opacity: isSubmitting ? 0.8 : 1 }}
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 width="14" height="14" className="animate-spin" />
+                          {t.btnSubmitting}
+                        </>
+                      ) : (
+                        <>
+                          <Send width="14" height="14" />
+                          {t.btnFinalSubmit}
+                        </>
+                      )}
                     </button>
                   </div>
                 </form>
@@ -947,7 +999,7 @@ export default function AIAndesStudioLanding() {
         </div>
       </section>
 
-      {/* ─── NEW: FAQ ACCORDION SECTION (NameThatUI Accordion / Disclosure) ─── */}
+      {/* ─── FAQ ACCORDION SECTION ─── */}
       <section id="faq" style={{ padding: '56px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
           
