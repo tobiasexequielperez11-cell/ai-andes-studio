@@ -1,9 +1,31 @@
 import type { Metadata } from 'next';
+import { Plus_Jakarta_Sans, Space_Grotesk, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 
+const plusJakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  variable: '--font-plus-jakarta',
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  variable: '--font-space-grotesk',
+  weight: ['500', '600', '700'],
+  display: 'swap',
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-jetbrains',
+  weight: ['400', '500'],
+  display: 'swap',
+});
+
 export const metadata: Metadata = {
-  title: 'AI Andes Studio — Workflow Systems & Intelligent Automations',
-  description: 'AI-assisted intake workflows, operational pipelines and dashboards for European businesses.',
+  title: 'AI Andes Studio | Engineering Intelligent Workflows',
+  description: 'We engineer digital systems that eliminate admin friction through high-end UI/UX and AI-driven operations.',
 };
 
 export default function RootLayout({
@@ -12,8 +34,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="bg-[#06080E] text-slate-100 antialiased selection:bg-sky-500/20 selection:text-sky-200">
+    <html lang="en" className={`${plusJakarta.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
+      <body className="antialiased bg-[var(--color-base-900)] text-slate-100 min-h-[100dvh] flex flex-col">
         {children}
       </body>
     </html>
