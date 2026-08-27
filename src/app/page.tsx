@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { motion, useInView, animate } from 'framer-motion';
 import { 
   ArrowRight, 
   CheckCircle2, 
@@ -36,6 +37,25 @@ import {
   Lock,
   Loader2
 } from 'lucide-react';
+
+
+function AnimatedCounter({ value, prefix = '', suffix = '' }: { value: number, prefix?: string, suffix?: string }) {
+  const nodeRef = React.useRef<HTMLSpanElement>(null);
+  React.useEffect(() => {
+    const node = nodeRef.current;
+    if (node) {
+      const controls = animate(0, value, {
+        duration: 1.5,
+        ease: "easeOut",
+        onUpdate(v) {
+          node.textContent = prefix + Math.round(v).toLocaleString() + suffix;
+        }
+      });
+      return () => controls.stop();
+    }
+  }, [value, prefix, suffix]);
+  return <span ref={nodeRef}>{prefix}{value}{suffix}</span>;
+}
 
 export default function AIAndesStudioLanding() {
   const [lang, setLang] = useState<'en' | 'es'>('en');
@@ -115,6 +135,14 @@ export default function AIAndesStudioLanding() {
       navRoi: 'ROI Calculator',
       navFaq: 'FAQ',
       navCta: 'Free Audit',
+
+      fricBadge: 'Friction Analysis',
+      fricTitle: 'Where teams lose time',
+      fricDesc: 'Based on our audits, this is how manual operational drag is typically distributed before automation.',
+      nsTitle: 'Next Steps',
+      ns1: 'Request received: We have logged your friction point.',
+      ns2: 'Analysis: Our engineers will map out automation opportunities.',
+      ns3: 'Blueprint delivery: Check your email in 24–48h.',
 
       // Hero Inspector Window
       windowHost: 'engine.ai-andes.studio · v2.4',
@@ -266,6 +294,14 @@ export default function AIAndesStudioLanding() {
       navRoi: 'Calculadora ROI',
       navFaq: 'Preguntas',
       navCta: 'Auditoría Gratis',
+
+      fricBadge: 'Análisis de Fricción',
+      fricTitle: 'Dónde pierden tiempo los equipos',
+      fricDesc: 'Basado en nuestras auditorías, esta es la distribución típica del arrastre operativo manual antes de automatizar.',
+      nsTitle: 'Próximos Pasos',
+      ns1: 'Solicitud recibida: Hemos registrado tu punto de fricción.',
+      ns2: 'Análisis: Nuestros ingenieros evaluarán oportunidades de automatización.',
+      ns3: 'Entrega del diagnóstico: Revisa tu correo en 24–48hs.',
 
       // Hero Mockup
       windowHost: 'motor.ai-andes.studio · v2.4',
@@ -458,7 +494,12 @@ export default function AIAndesStudioLanding() {
   };
 
   return (
-    <div style={{ backgroundColor: '#06080E', minHeight: '100vh', color: '#F1F5F9' }}>
+    <div style={{ backgroundColor: '#06080E', minHeight: '100vh', color: '#F1F5F9', position: 'relative' }}>
+      <div className="fixed inset-0 z-[0] pointer-events-none" style={{
+        backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.03) 1px, transparent 0)`,
+        backgroundSize: '32px 32px'
+      }}></div>
+      <div className="relative z-10">
       
       {/* ─── TOP NOTIFICATION STRIP ─── */}
       <div style={{ backgroundColor: 'rgba(245, 158, 11, 0.08)', borderBottom: '1px solid rgba(245, 158, 11, 0.2)', padding: '8px 16px', textAlign: 'center', fontSize: '11px', fontFamily: 'monospace', color: '#F59E0B', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
@@ -682,6 +723,48 @@ export default function AIAndesStudioLanding() {
         </div>
       </section>
 
+      
+      {/* ─── FRICTION DISTRIBUTION (MOBILE-COMPACT) ─── */}
+      <section id="friction" style={{ padding: '48px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
+        <div style={{ maxWidth: '1152px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '40px', alignItems: 'center' }}>
+          <div>
+            <div style={{ fontSize: '11px', fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '1px', color: '#EF4444', marginBottom: '6px' }}>{t.fricBadge}</div>
+            <h2 style={{ fontSize: '26px', fontWeight: 800, color: '#FFFFFF', marginBottom: '6px' }}>{t.fricTitle}</h2>
+            <p style={{ fontSize: '13px', color: '#94A3B8' }}>{t.fricDesc}</p>
+          </div>
+          <div style={{ padding: '24px', borderRadius: '16px', backgroundColor: '#0B101D', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+              {[
+                { label: t.fric1 || 'Unqualified inquiries', val: 42, color: '#EF4444' },
+                { label: t.fric2 || 'Manual data re-entry', val: 28, color: '#F59E0B' },
+                { label: t.fric3 || 'Late follow-ups', val: 18, color: '#F59E0B' },
+                { label: t.fric4 || 'Missing documents', val: 12, color: '#F59E0B' }
+              ].map((item, i) => (
+                <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', fontFamily: 'monospace', color: '#CBD5E1' }}>
+                    <span>{item.label}</span>
+                    <span style={{ fontWeight: 800 }}>{item.val}%</span>
+                  </div>
+                  <div style={{ width: '100%', height: '8px', backgroundColor: '#06080E', borderRadius: '4px', overflow: 'hidden' }}>
+                    <motion.div
+                      initial={{ width: 0 }}
+                      whileInView={{ width: `${item.val}%` }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 1, delay: i * 0.1, ease: 'easeOut' }}
+                      style={{ height: '100%', backgroundColor: item.color, borderRadius: '4px' }}
+                    />
+                  </div>
+                </div>
+              ))}
+              <div style={{ fontSize: '10px', color: '#64748B', fontFamily: 'monospace', textAlign: 'right', marginTop: '4px' }}>
+                * Example distribution based on SME audits
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
       {/* ─── HEYFARDO FRAMEWORK ─── */}
       <section id="framework" style={{ padding: '48px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
         <div style={{ maxWidth: '1152px', margin: '0 auto' }}>
@@ -829,18 +912,18 @@ export default function AIAndesStudioLanding() {
               <input 
                 type="range" min="10" max="200" step="5" value={weeklyVolume} 
                 onChange={(e) => setWeeklyVolume(Number(e.target.value))} 
-                style={{ width: '100%', height: '6px', backgroundColor: '#06080E', borderRadius: '6px', outline: 'none', cursor: 'pointer', accentColor: '#F59E0B' }} 
+                style={{ width: '100%', height: '12px', backgroundColor: '#06080E', borderRadius: '6px', outline: 'none', cursor: 'pointer', accentColor: '#F59E0B' }} className="touch-pan-y" 
               />
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', paddingTop: '14px', borderTop: '1px solid rgba(255,255,255,0.08)', fontFamily: 'monospace', textAlign: 'center' }}>
               <div style={{ padding: '14px', borderRadius: '10px', backgroundColor: '#06080E', border: '1px solid rgba(255,255,255,0.08)' }}>
                 <div style={{ fontSize: '10px', color: '#94A3B8', marginBottom: '4px' }}>{t.calcHours}</div>
-                <div style={{ fontSize: '20px', fontWeight: 800, color: '#F59E0B' }}>~{hoursSaved} hrs / mo</div>
+                <div style={{ fontSize: '20px', fontWeight: 800, color: '#F59E0B' }}><AnimatedCounter value={hoursSaved} prefix="~" suffix=" hrs / mo" /></div>
               </div>
               <div style={{ padding: '14px', borderRadius: '10px', backgroundColor: '#06080E', border: '1px solid rgba(255,255,255,0.08)' }}>
                 <div style={{ fontSize: '10px', color: '#94A3B8', marginBottom: '4px' }}>{t.calcVal}</div>
-                <div style={{ fontSize: '20px', fontWeight: 800, color: '#10B981' }}>~€{eurosSaved.toLocaleString()} / mo</div>
+                <div style={{ fontSize: '20px', fontWeight: 800, color: '#10B981' }}><AnimatedCounter value={eurosSaved} prefix="~€" suffix=" / mo" /></div>
               </div>
             </div>
           </div>
@@ -858,23 +941,56 @@ export default function AIAndesStudioLanding() {
           </div>
 
           {/* Stepper Progress Indicator */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', marginBottom: '28px', fontFamily: 'monospace', fontSize: '11px' }}>
-            <div style={{ padding: '8px 12px', borderRadius: '8px', border: auditStep === 1 ? '1px solid #F59E0B' : '1px solid #1E293B', backgroundColor: auditStep >= 1 ? 'rgba(245, 158, 11, 0.1)' : '#070A11', color: auditStep >= 1 ? '#F59E0B' : '#64748B', textAlign: 'center', fontWeight: 700 }}>
-              {t.step1Name}
-            </div>
-            <div style={{ padding: '8px 12px', borderRadius: '8px', border: auditStep === 2 ? '1px solid #F59E0B' : '1px solid #1E293B', backgroundColor: auditStep >= 2 ? 'rgba(245, 158, 11, 0.1)' : '#070A11', color: auditStep >= 2 ? '#F59E0B' : '#64748B', textAlign: 'center', fontWeight: 700 }}>
-              {t.step2Name}
-            </div>
-            <div style={{ padding: '8px 12px', borderRadius: '8px', border: auditStep === 3 ? '1px solid #F59E0B' : '1px solid #1E293B', backgroundColor: auditStep >= 3 ? 'rgba(245, 158, 11, 0.1)' : '#070A11', color: auditStep >= 3 ? '#F59E0B' : '#64748B', textAlign: 'center', fontWeight: 700 }}>
-              {t.step3Name}
-            </div>
+          <div style={{ position: 'relative', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', maxWidth: '320px', margin: '0 auto 20px auto' }}>
+            <div style={{ position: 'absolute', left: 0, right: 0, top: '50%', height: '1px', backgroundColor: 'rgba(255,255,255,0.1)', zIndex: 0 }}></div>
+            {[1, 2, 3].map(step => (
+              <div key={step} style={{ 
+                width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', 
+                fontSize: '12px', fontWeight: 800, fontFamily: 'monospace', position: 'relative', zIndex: 1,
+                backgroundColor: auditStep >= step ? '#F59E0B' : '#0B101D',
+                color: auditStep >= step ? '#06080E' : '#64748B',
+                border: auditStep >= step ? '1px solid #F59E0B' : '1px solid rgba(255,255,255,0.1)'
+              }}>
+                {step}
+              </div>
+            ))}
+          </div>
+          <div style={{ textAlign: 'center', fontFamily: 'monospace', color: '#F59E0B', fontSize: '11px', fontWeight: 800, marginBottom: '28px' }}>
+            {auditStep === 1 ? t.step1Name : auditStep === 2 ? t.step2Name : t.step3Name}
           </div>
 
           {auditSent ? (
-            <div style={{ padding: '32px', borderRadius: '16px', backgroundColor: '#06080E', border: '1px solid rgba(16, 185, 129, 0.4)', textAlign: 'center', fontFamily: 'monospace' }}>
-              <CheckCircle2 width="36" height="36" color="#10B981" style={{ margin: '0 auto 8px auto' }} />
-              <h3 style={{ fontSize: '18px', fontWeight: 800, color: '#FFFFFF', marginBottom: '4px' }}>{t.auditSentTitle}</h3>
-              <p style={{ fontSize: '12px', color: '#94A3B8' }}>{t.auditSentDesc}</p>
+            <div style={{ padding: '32px 24px', borderRadius: '16px', backgroundColor: '#06080E', border: '1px solid rgba(16, 185, 129, 0.4)', textAlign: 'center' }}>
+              <CheckCircle2 width="42" height="42" color="#10B981" style={{ margin: '0 auto 16px auto' }} />
+              <h3 style={{ fontSize: '20px', fontWeight: 800, color: '#FFFFFF', marginBottom: '8px' }}>{t.auditSentTitle}</h3>
+              <p style={{ fontSize: '13px', color: '#94A3B8', marginBottom: '24px' }}>{t.auditSentDesc}</p>
+              
+              <div style={{ backgroundColor: '#0B101D', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '12px', padding: '20px', textAlign: 'left' }}>
+                <div style={{ fontSize: '11px', fontFamily: 'monospace', color: '#64748B', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '16px' }}>{t.nsTitle}</div>
+                
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
+                    <div style={{ width: '24px', height: '24px', borderRadius: '50%', backgroundColor: 'rgba(16, 185, 129, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <Check width="14" height="14" color="#10B981" />
+                    </div>
+                    <div style={{ fontSize: '13px', color: '#E2E8F0', lineHeight: 1.5 }}>{t.ns1}</div>
+                  </div>
+                  
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
+                    <div style={{ width: '24px', height: '24px', borderRadius: '50%', backgroundColor: 'rgba(245, 158, 11, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <div style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#F59E0B' }} />
+                    </div>
+                    <div style={{ fontSize: '13px', color: '#E2E8F0', lineHeight: 1.5 }}>{t.ns2}</div>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
+                    <div style={{ width: '24px', height: '24px', borderRadius: '50%', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <Clock width="12" height="12" color="#94A3B8" />
+                    </div>
+                    <div style={{ fontSize: '13px', color: '#E2E8F0', lineHeight: 1.5 }}>{t.ns3}</div>
+                  </div>
+                </div>
+              </div>
             </div>
           ) : (
             <div>
@@ -1044,6 +1160,7 @@ export default function AIAndesStudioLanding() {
         <div>{t.footerCopy}</div>
       </footer>
 
+      </div>
     </div>
   );
 }
